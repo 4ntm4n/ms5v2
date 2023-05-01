@@ -1,6 +1,6 @@
 import React from "react";
 
-function Navbar() {
+function Navbar({children}) {
   return (
     <div className="drawer">
   <input id="my-drawer-3" type="checkbox" className="drawer-toggle" /> 
@@ -22,7 +22,7 @@ function Navbar() {
       </div>
     </div>
     {/* Page content here */}
-    Content
+        {children}
   </div> 
   <div className="drawer-side">
     <label htmlFor="my-drawer-3" className="drawer-overlay"></label> 

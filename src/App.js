@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
-import Navbar from './components/Navbar';
-import { Route, Routes } from 'react-router-dom';
+import "./App.css";
+import { Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
     <>
-      <Navbar/>
+      <Navbar>
+        <Routes>
+          {/* unprotected routes */}
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" />
+          <Route path="/signup" />
 
-      <Routes>
-        {/* unprotected routes */}
-        <Route path="/"/>
-        <Route path="/login"/>
-        <Route path="/signup"/>
-
-
-        {/* protected routes here */}
-      </Routes>
-      
+          {/* protected routes here */}
+        </Routes>
+      </Navbar>
     </>
   );
 }
