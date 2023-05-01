@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 function Navbar({ children }) {
     const [login, setLogin] = useState(false);
@@ -12,8 +13,8 @@ function Navbar({ children }) {
     );
     const unAuthNav = (
         <>
-          <li><a>Log in</a></li>
-          <li><a>signup</a></li>
+          <li><NavLink to="/login">Log in</NavLink></li>
+          <li><NavLink to="/signup">Sign up</NavLink></li>
         </>
     );
 
