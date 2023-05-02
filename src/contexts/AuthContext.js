@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
       
         if (response.status === 200){
         //sets tokens in local Storage
-        console.log("setting tokens in localStorage");
+        //console.log("setting tokens in localStorage");
         localStorage.setItem("tokens", JSON.stringify(data));
         setTokens(data);
         /* setUser(data.access); */

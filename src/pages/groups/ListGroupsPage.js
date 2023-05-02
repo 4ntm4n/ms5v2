@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../../api/AxiosInterceptors";
 
 function ListGroupsPage() {
@@ -15,6 +15,9 @@ function ListGroupsPage() {
   };
   //  init fetch groups with useEffect on group change
      
+  useEffect(() => {
+    fetchGroups();
+  }, [groups]);
   return (
     <>
       <h1>list of groups you are in</h1>

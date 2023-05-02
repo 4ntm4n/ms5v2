@@ -13,7 +13,7 @@ function Navbar({ children }) {
 
   useEffect(() => {
     user && setLogin(true);
-    console.log(user);
+    //console.log(user);
   }, [user, login]);
 
   const authNav = (
