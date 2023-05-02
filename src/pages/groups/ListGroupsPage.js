@@ -7,8 +7,8 @@ function ListGroupsPage() {
   // fetch groups from the db
   const fetchGroups = async () => {
     try {
-        const {data} = api.get("/groups/");
-        console.log(data.response);
+        const { data } = await api.get("/groups/");
+        console.log(data);
     } catch (error) {
         console.log(error);       
     }

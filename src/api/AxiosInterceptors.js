@@ -17,9 +17,10 @@ const baseURL = "http://localhost:8000";
 
 //create axios instance
 const api = axios.create({
-  baseURL,
-  headers: { Authorization: `Bearer $tokens?.access` },
-});
+    baseURL,
+    headers: { Authorization: `Bearer ${tokens?.access}` },
+  });
+
 
 //define list of subscribers,check if refresh is already in progress
 let isRefreshing = false;
@@ -37,13 +38,17 @@ const onAccessTokenRefresh = (callback) => {
 //create request interceptor for updating token
 api.interceptors.request.use((config) => {
     console.log("hello from before a request");
+    return config;
 });
 //create response interceptor to retry if a request fails
 api.interceptors.response.use(
-    response => response,
+    (response) => {
+        return response;
+    },
     error => {
         // handle failed request because of token expired
         // (aka status 401.) and retry request after token-change
+    return Promise.reject(error);
     }
 );
 //export axios instance
