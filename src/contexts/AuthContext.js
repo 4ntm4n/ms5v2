@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState( null);
   const [loading, setLoading] = useState(true);
 
-
+  //set user, based on decrypted authtoken
   const extractUser = (token) => {
     const decUser = jwtDecode(token.access);
     return {
@@ -44,10 +44,13 @@ export const AuthProvider = ({ children }) => {
       });
 
       //store json response
+      
       const data = await response.json();
       /* console.log("access token :", JSON.stringify(data.access));
         console.log("refresh token :", JSON.stringify(data.refresh)); */
-      if (response.status === 200){
+      
+        if (response.status === 200){
+        //sets tokens in local Storage
         console.log("setting tokens in localStorage");
         localStorage.setItem("tokens", JSON.stringify(data));
         setTokens(data);
@@ -58,7 +61,7 @@ export const AuthProvider = ({ children }) => {
       console.log(error);
     }
   };
-
+  //logout function
   const logout = () => {
     localStorage.removeItem("tokens");
     setUser(null);
@@ -70,11 +73,8 @@ export const AuthProvider = ({ children }) => {
     }
     setLoading(false);
   }, [tokens, loading]);
-
-  //add logout function
-  //set tokens in local Storage
-  //set user based on decrypted authtoken
-
+  
+// methods and context passed to rest of app
   const authData = {
     user,
     login,
