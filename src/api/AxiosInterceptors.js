@@ -7,13 +7,18 @@ import axios from "axios";
  * a single request, on every requiest, appose to having two separate instances
  * as shown in the walkthrough project at code institute. */
 
+//get tokens from localStorage
+let tokens = localStorage.getItem("tokens")
+    ? JSON.parse(localStorage.getItem("tokens"))
+    : null;
+
 //create baseURL
 const baseURL = "http://localhost:8000";
 
 //create axios instance
 const api = axiosInstance.create({
     baseURL,
-    headers: {Authorization: `Bearer $tokens.access`}
+    headers: {Authorization: `Bearer $tokens?.access`}
 });
 
 //function to refresh token and notify subscribers
