@@ -1,4 +1,4 @@
-const { createContext, useContext } = require("react");
+const { createContext, useContext, useState, useEffect } = require("react");
 
 // create an auth context
 const AuthContext = createContext();
@@ -7,8 +7,9 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 //create auth provider
-export const AuthProvider = () => {
+export const AuthProvider = ({children}) => {
     const [tokens, setTokens] = useState();
+    const [loading, setLoading] = useState(true);
 
 
     const login = async (e) => {
@@ -20,6 +21,10 @@ export const AuthProvider = () => {
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        setLoading(false);
+    }, []);
     //add logout function
     //set tokens in local Storage
     //set user based on decrypted authtoken 
@@ -29,7 +34,7 @@ export const AuthProvider = () => {
     };
 
     return (
-        <AuthContext.Provider value={authData}></AuthContext.Provider>
+        <AuthContext.Provider value={authData}>{loading ? null : children}</AuthContext.Provider>
     ); 
 };
 
