@@ -8,7 +8,8 @@ export const useAuth = () => useContext(AuthContext);
 
 //create auth provider
 export const AuthProvider = ({ children }) => {
-  const [tokens, setTokens] = useState();
+  const [tokens, setTokens] = useState(null);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const login = async (e) => {
@@ -29,11 +30,13 @@ export const AuthProvider = ({ children }) => {
 
       //store json response
       const data = await response.json();
+      /* console.log("access token :", JSON.stringify(data.access));
+        console.log("refresh token :", JSON.stringify(data.refresh)); */
       if (response.status === 200){
         console.log("setting tokens in localStorage");
         localStorage.setItem("tokens", JSON.stringify(data));
-        /* console.log("access token :", JSON.stringify(data.access));
-        console.log("refresh token :", JSON.stringify(data.refresh)); */
+        setTokens(data);
+        setUser(data.access);
       };
       
     } catch (error) {
