@@ -8,8 +8,16 @@ export const useAuth = () => useContext(AuthContext);
 
 //create auth provider
 export const AuthProvider = ({ children }) => {
-  const [tokens, setTokens] = useState(null);
-  const [user, setUser] = useState(null);
+  const [tokens, setTokens] = useState( () => 
+    localStorage.getItem("tokens")
+    ? JSON.parse(localStorage.getItem("tokens"))
+    : null
+  );
+  const [user, setUser] = useState(
+    localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null
+  );
   const [loading, setLoading] = useState(true);
 
   const login = async (e) => {
