@@ -1,3 +1,4 @@
+import jwtDecode from "jwt-decode";
 const { createContext, useContext, useState, useEffect } = require("react");
 
 // create an auth context
@@ -19,6 +20,16 @@ export const AuthProvider = ({ children }) => {
     : null
   );
   const [loading, setLoading] = useState(true);
+
+
+  const extractUser = (token) => {
+    const decUser = jwtDecode(token.access);
+    return {
+        userId: decUser.user_id,
+        usernam: decUser.username,
+        image: decUser.profile_image,
+        };
+  };
 
   const login = async (e) => {
     e.preventDefault();
@@ -44,7 +55,8 @@ export const AuthProvider = ({ children }) => {
         console.log("setting tokens in localStorage");
         localStorage.setItem("tokens", JSON.stringify(data));
         setTokens(data);
-        setUser(data.access);
+        setUserextractUser(data);
+        /* setUser(data.access); */
       };
       
     } catch (error) {
