@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
     e.preventDefault();
 
     try {
+        // fetch a token using the username and password of an existing user
       const response = await fetch("http://localhost:8000/api/token/", {
         method: "POST",
         headers: {
@@ -26,12 +27,15 @@ export const AuthProvider = ({ children }) => {
         }),
       });
 
+      //store json response
       const data = await response.json();
-      console.log("response status :", response.status);
-
-      console.log(
-        `username ${e.target.username.value}, password ${e.target.password.value}`
-      );
+      if (response.status === 200){
+        console.log("setting tokens in localStorage");
+        localStorage.setItem("tokens", JSON.stringify(data));
+        /* console.log("access token :", JSON.stringify(data.access));
+        console.log("refresh token :", JSON.stringify(data.refresh)); */
+      };
+      
     } catch (error) {
       console.log(error);
     }
