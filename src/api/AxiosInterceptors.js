@@ -8,8 +8,13 @@ import axios from "axios";
  * as shown in the walkthrough project at code institute. */
 
 //create baseURL
+const baseURL = "http://localhost:8000";
 
 //create axios instance
+const api = axiosInstance.create({
+    baseURL,
+    headers: {Authorization: `Bearer $tokens.access`}
+});
 
 //function to refresh token and notify subscribers
 
