@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/auth/LoginPage";
 import Signup from "./pages/auth/Signup";
+import ListGroupsPage from "./pages/groups/ListGroupsPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
 
           {/* protected routes here */}
+          <Route path="/groups" element={<ListGroupsPage /> } />
         </Routes>
       </Navbar>
     </>
