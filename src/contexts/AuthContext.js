@@ -16,7 +16,7 @@ export const AuthProvider = ({children}) => {
         e.preventDefault();
 
         try {
-            console.log("running login function");
+            console.log(`username ${e.target.username.value}, password ${e.target.password.value}`);
         } catch (error) {
             console.log(error);
         }
