@@ -14,7 +14,7 @@ function ListGroupsPage() {
     }
   };
   //  init fetch groups with useEffect on group change
-
+     
   return (
     <>
       <h1>list of groups you are in</h1>

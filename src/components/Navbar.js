@@ -20,7 +20,7 @@ function Navbar({ children }) {
     <>
       <li>hello</li>
       <li>
-        <a>Groups</a>
+        <NavLink to="/groups">Groups</NavLink> 
       </li>
       <li>
         <a>Tasks</a>

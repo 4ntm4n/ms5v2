@@ -16,7 +16,7 @@ let tokens = localStorage.getItem("tokens")
 const baseURL = "http://localhost:8000";
 
 //create axios instance
-const api = axiosInstance.create({
+const api = axios.create({
   baseURL,
   headers: { Authorization: `Bearer $tokens?.access` },
 });
@@ -35,11 +35,11 @@ const onAccessTokenRefresh = (callback) => {
     // code to subscribe to a token refresh
 };
 //create request interceptor for updating token
-api.interceptor.request.use((config) => {
+api.interceptors.request.use((config) => {
     console.log("hello from before a request");
 });
 //create response interceptor to retry if a request fails
-api.interceptor.response.use(
+api.interceptors.response.use(
     response => response,
     error => {
         // handle failed request because of token expired
