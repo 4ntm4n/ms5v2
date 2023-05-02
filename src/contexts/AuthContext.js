@@ -14,11 +14,7 @@ export const AuthProvider = ({ children }) => {
     ? JSON.parse(localStorage.getItem("tokens"))
     : null
   );
-  const [user, setUser] = useState(
-    localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : null
-  );
+  const [user, setUser] = useState( null);
   const [loading, setLoading] = useState(true);
 
 
@@ -55,13 +51,17 @@ export const AuthProvider = ({ children }) => {
         console.log("setting tokens in localStorage");
         localStorage.setItem("tokens", JSON.stringify(data));
         setTokens(data);
-        setUserextractUser(data);
         /* setUser(data.access); */
       };
       
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const logout = () => {
+    localStorage.removeItem("tokens");
+    setUser(null);
   };
 
   useEffect(() => {
@@ -78,6 +78,7 @@ export const AuthProvider = ({ children }) => {
   const authData = {
     user,
     login,
+    logout,
   };
 
   return (
