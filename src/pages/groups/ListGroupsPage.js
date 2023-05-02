@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
+import api from "../../api/AxiosInterceptors";
 
 function ListGroupsPage() {
+  const [groups, setGroups] = useState();
 
   // fetch groups from the db
-
+  const fetchGroups = async () => {
+    try {
+        const {data} = api.get("/groups/");
+        console.log(data.response);
+    } catch (error) {
+        console.log(error);       
+    }
+  };
   //  init fetch groups with useEffect on group change
-
 
   return (
     <>
