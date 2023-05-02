@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
     const decUser = jwtDecode(token.access);
     return {
         userId: decUser.user_id,
-        usernam: decUser.username,
+        username: decUser.username,
         image: decUser.profile_image,
         };
   };
@@ -65,13 +65,18 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (tokens){
+      setUser(extractUser(tokens));
+    }
     setLoading(false);
-  }, []);
+  }, [tokens, loading]);
+
   //add logout function
   //set tokens in local Storage
   //set user based on decrypted authtoken
 
   const authData = {
+    user,
     login,
   };
 

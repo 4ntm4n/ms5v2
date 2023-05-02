@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 function Navbar({ children }) {
+    const {user} = useAuth();
     const [login, setLogin] = useState(false);
+
+    useEffect(() => {
+        user && setLogin(true);
+        console.log(user);
+    }, []);
 
     const authNav = (
         <>
+          <li>hello {user.username}</li>
           <li><a>Groups</a></li>
           <li><a>Tasks</a></li>
           <li><a>Log out</a></li>
