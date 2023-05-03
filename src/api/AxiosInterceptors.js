@@ -31,9 +31,16 @@ const refreshTokenAndNotifySubscriber = () => {
     refreshSubscribers list  */
     if (!isRefreshing){
         isRefreshing = true;
-   
+        
+        return axios
+            .post(`${baseURL}/api/token/refresh/`, {refresh: tokens.refresh})
+            .then((response)=> {
+                tokens = response.data;
+                localStorage.setItem("tokens", response.data);
+            })
+            .finally();
     // make a call to the refresh token endpoint
-
+    
     //go through list of refresh subscribers with newtoken as arg.
 
     //empty list of refreshSubscribers and set isRefreshing to false again
