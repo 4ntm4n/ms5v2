@@ -7,6 +7,7 @@ import Signup from "./pages/auth/Signup";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 import ListGroupsPage from "./pages/groups/ListGroupsPage";
 import PublicRoutes from "./utils/PublicRoutes";
+import TaskPage from "./pages/tasks/TaskPage";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           {/* protected routes here */}
           <Route element={<ProtectedRoutes />}>
             <Route path="/groups" element={<ListGroupsPage /> } />
+            <Route path="/tasks" element={<TaskPage /> } />
           </Route>
         </Routes>
       </Navbar>
