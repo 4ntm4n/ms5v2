@@ -25,33 +25,47 @@ const api = axios.create({
 let isRefreshing = false;
 let refreshSubscribers = [];
 
-//function to refresh token and notify subscribers
+/*
+ *
+ * if multiple requests at the same time, the first request to rech here
+ * sets the isRrefreshing to true, which makes the following requests being
+ * pushed to the list of 'refreshSubscribers' array. it then makes a request to
+ * get the new refresh token and replace the old one from local storage. Then
+ * it goes through the list of subscribers to update all of their header info
+ * using setting the callback variable. refreshSubscribers are emptied,
+ * and finally isRefreshing is toggled back to initial state.*/
 const refreshTokenAndNotifySubscriber = () => {
-    /* set isRefreshg to true so following requests gets pushed to the
-    refreshSubscribers list  */
-    if (!isRefreshing){
-        isRefreshing = true;
-        
-        return axios
-            .post(`${baseURL}/api/token/refresh/`, {refresh: tokens.refresh})
-            .then((response)=> {
-                tokens = response.data;
-                localStorage.setItem("tokens", response.data);
-                refreshSubscribers.forEach( callback => callback(response.data.access));
-                refreshSubscribers = [];
-            })
-            .finally(() => {
-                isRefreshing = false;
-            });
+  if (!isRefreshing) {
+    isRefreshing = true;
 
-}
+    return axios
+      .post(`${baseURL}/api/token/refresh/`, { refresh: tokens.refresh })
+      .then((response) => {
+        tokens = response.data;
+        localStorage.setItem("tokens", response.data);
+        refreshSubscribers.forEach((callback) =>
+          callback(response.data.access)
+        );
+        refreshSubscribers = [];
+      })
+      .finally(() => {
+        isRefreshing = false;
+      });
+  }
 };
 
 //function to subscribe to token refresh
 const onAccessTokenRefresh = (callback) => {
   refreshSubscribers.push(callback);
 };
-//create request interceptor for updating token
+
+
+/*
+ *
+ * the promise in this interceptor waits for a new access token, creates a 
+ * callback function that updates the original request with the new access 
+ * token and retries the original request; it will not execute until the 
+ * refresh token process has completed */
 api.interceptors.request.use((config) => {
   console.log("hello from before a request");
   return config;
@@ -70,16 +84,10 @@ api.interceptors.response.use(
         refreshTokenAndNotifySubscriber();
       }
 
-      /*
-       *
-       * this promise waits for a new access token, creates a callback function 
-       * that updates the original request with the new access token, and retries 
-       * the original request; it will not execute until the refresh token process 
-       * has completed */
       const retryOriginalRequest = new Promise((resolve) => {
         onAccessTokenRefresh((newAccessToken) => {
-            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-            resolve(axios(originalRequest));
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          resolve(axios(originalRequest));
         });
       });
     }
