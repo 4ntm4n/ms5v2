@@ -5,7 +5,12 @@ import axios from "axios";
  * purpose of this interceptors file is to build one axios instance
  * that has both an request AND a response interceptor that works together in
  * a single request, on every requiest, appose to having two separate instances
- * as shown in the walkthrough project at code institute. */
+ * as shown in the walkthrough project at code institute. 
+ * If multiple requests are made at the same time, this apprach solves the issue 
+ * of the server being bombarded with requests to the refresh token endpoint,
+ * by only letting one request reach the function that makes the request to the refresh
+ * endpoint on the server, the rest of the requests will be stored in a promise 
+ * and updated once a new refresh token is obtained.*/
 
 //get tokens from localStorage
 let tokens = localStorage.getItem("tokens")
@@ -58,7 +63,6 @@ const refreshTokenAndNotifySubscriber = () => {
 const onAccessTokenRefresh = (callback) => {
   refreshSubscribers.push(callback);
 };
-
 
 /*
  *
