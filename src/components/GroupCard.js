@@ -11,10 +11,33 @@ function GroupCard({ group }) {
           {/* img with source to group owner */}
         </div>
       </div>
-      <div className="card-body">
+      <div className="card-body mt-20">
         <h2 className="card-title">{group.name}</h2>
         <p>{group.content}</p>
-        <div className="card-actions justify-end">
+        <div className="card-actions justify-between mt-10">
+          <div className="avatar-group -space-x-6">
+            <div className="avatar">
+              <div className="w-12">
+                <img src="https://via.placeholder.com/150x150?text=Your+Text" />
+              </div>
+            </div>
+            <div className="avatar">
+              <div className="w-12">
+                <img src="https://via.placeholder.com/150x150?text=Your+Text" />
+              </div>
+            </div>
+            <div className="avatar">
+              <div className="w-12">
+                <img src="https://via.placeholder.com/150x150?text=Your+Text" />
+              </div>
+            </div>
+            <div className="avatar placeholder">
+              <div className="w-12 bg-neutral-focus text-neutral-content">
+                <span>+99</span>
+              </div>
+            </div>
+          </div>
+
           <Link to={`${id}`}>
             <button className="btn btn-primary">go to group: {id}</button>
           </Link>
