@@ -21,9 +21,8 @@ function Navbar({ children }) {
       <li>hello</li>
       <li>
         <NavLink to="/groups">Groups</NavLink> 
-      </li>
-      <li>
-        <a>Tasks</a>
+      </li><li>
+        <NavLink to="/tasks">Tasks</NavLink> 
       </li>
       <li>
         <a onClick={handleLogout}>Log out</a>
