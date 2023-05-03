@@ -32,7 +32,7 @@ const refreshTokenAndNotifySubscriber = () => {
 
 //function to subscribe to token refresh
 const onAccessTokenRefresh = (callback) => {
-  // code to subscribe to a token refresh
+  refreshSubscribers.push(callback);
 };
 //create request interceptor for updating token
 api.interceptors.request.use((config) => {
@@ -60,7 +60,10 @@ api.interceptors.response.use(
        * the original request; it will not execute until the refresh token process 
        * has completed */
       const retryOriginalRequest = new Promise((resolve) => {
-        resolve(axios(originalRequest));
+        onAccessTokenRefresh((newAccessToken) => {
+            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+            resolve(axios(originalRequest));
+        });
       });
     }
     return Promise.reject(error);
