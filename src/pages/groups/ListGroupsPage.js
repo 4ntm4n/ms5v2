@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../../api/AxiosInterceptors";
+import GroupCard from "../../components/GroupCard";
 
 function ListGroupsPage() {
   const [groups, setGroups] = useState([]);
@@ -23,7 +24,7 @@ function ListGroupsPage() {
       {/* map all groups fetch from the db */}
         {groups.length 
             ? (groups.map(group => (
-                <h1 key ={group.id}>{group.name}</h1>
+              <GroupCard key={group.id} group={group} />
             ))) 
             : ("loading")}
       {/* import add group method somewhere */}
