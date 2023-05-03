@@ -59,7 +59,9 @@ api.interceptors.response.use(
        * that updates the original request with the new access token, and retries 
        * the original request; it will not execute until the refresh token process 
        * has completed */
-      const retryOriginalRequest = new Promise();
+      const retryOriginalRequest = new Promise((resolve) => {
+        resolve(axios(originalRequest));
+      });
     }
     return Promise.reject(error);
   }
