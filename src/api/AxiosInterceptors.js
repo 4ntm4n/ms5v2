@@ -46,8 +46,14 @@ api.interceptors.response.use(
         return response;
     },
     error => {
-        // handle failed request because of token expired
-        // (aka status 401.) and retry request after token-change
+        const originalRequest = error.config;
+        const status = error.response.status;
+
+        if (status === 401) {
+            if (!isRefreshing){
+                console.log("we need to call the refresh token endpoint!");
+            }
+        }
     return Promise.reject(error);
     }
 );
