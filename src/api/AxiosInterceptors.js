@@ -37,13 +37,13 @@ const refreshTokenAndNotifySubscriber = () => {
             .then((response)=> {
                 tokens = response.data;
                 localStorage.setItem("tokens", response.data);
+                refreshSubscribers.forEach( callback => callback(response.data.access));
+                refreshSubscribers = [];
             })
-            .finally();
-    // make a call to the refresh token endpoint
-    
-    //go through list of refresh subscribers with newtoken as arg.
+            .finally(() => {
+                isRefreshing = false;
+            });
 
-    //empty list of refreshSubscribers and set isRefreshing to false again
 }
 };
 
