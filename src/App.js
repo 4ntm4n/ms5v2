@@ -8,6 +8,7 @@ import ProtectedRoutes from "./utils/ProtectedRoutes";
 import ListGroupsPage from "./pages/groups/ListGroupsPage";
 import PublicRoutes from "./utils/PublicRoutes";
 import TaskPage from "./pages/tasks/TaskPage";
+import GroupDetailPage from "./pages/groups/GroupDetailPage";
 
 
 function App() {
@@ -25,7 +26,10 @@ function App() {
 
           {/* protected routes here */}
           <Route element={<ProtectedRoutes />}>
-            <Route path="/groups" element={<ListGroupsPage /> } />
+            <Route path="/groups">
+              <Route index element={<ListGroupsPage /> } />
+              <Route path=":id" element={<GroupDetailPage /> } />
+            </Route>
             <Route path="/tasks" element={<TaskPage /> } />
           </Route>
         </Routes>
