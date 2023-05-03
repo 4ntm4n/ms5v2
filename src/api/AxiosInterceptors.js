@@ -27,7 +27,17 @@ let refreshSubscribers = [];
 
 //function to refresh token and notify subscribers
 const refreshTokenAndNotifySubscriber = () => {
-  console.log("make a request to the refresh token endpoint, then refresh all subscribers.");
+    /* set isRefreshg to true so following requests gets pushed to the
+    refreshSubscribers list  */
+    if (!isRefreshing){
+        isRefreshing = true;
+   
+    // make a call to the refresh token endpoint
+
+    //go through list of refresh subscribers with newtoken as arg.
+
+    //empty list of refreshSubscribers and set isRefreshing to false again
+}
 };
 
 //function to subscribe to token refresh
