@@ -27,7 +27,7 @@ let refreshSubscribers = [];
 
 //function to refresh token and notify subscribers
 const refreshTokenAndNotifySubscriber = () => {
-  //define method to refresh token here
+  console.log("make a request to the refresh token endpoint, then refresh all subscribers.");
 };
 
 //function to subscribe to token refresh
@@ -50,7 +50,7 @@ api.interceptors.response.use(
 
     if (status === 401) {
       if (!isRefreshing) {
-        console.log("we need to call the refresh token endpoint!");
+        refreshTokenAndNotifySubscriber();
       }
 
       /*
