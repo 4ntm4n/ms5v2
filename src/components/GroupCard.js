@@ -6,8 +6,8 @@ function GroupCard({ group }) {
   return (
     <div className="card w-96 bg-base-100 shadow-xl">
       <div className="card-body">
-        <h2 className="card-title">Card title!</h2>
-        <p>card content</p>
+        <h2 className="card-title">{group.name}</h2>
+        <p>{group.content}</p>
         <div className="card-actions justify-end">
         <Link to={`${id}`}>
             <button className="btn btn-primary">go to group: {id}</button>
