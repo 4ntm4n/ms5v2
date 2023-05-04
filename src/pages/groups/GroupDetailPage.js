@@ -1,14 +1,29 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import BottomNav from "../../components/BottomNav";
+import api from "../../api/AxiosInterceptors";
 
 function GroupDetailPage() {
   const { id } = useParams();
   const drawerRef = useRef();
+  const [group, setGroup] = useState();
 
   const handleDrawerToggle = () => {
     drawerRef.current.checked = !drawerRef.current.checked;
   };
+
+  const fetchGroup = async () => {
+    try {
+        const { data } = await api.get(`/groups/${id}/`);
+        setGroup(data);
+    } catch (error) {
+        console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchGroup();
+  }, []);
 
   return (
     <div className="drawer">
@@ -30,7 +45,11 @@ function GroupDetailPage() {
                 add members
               </button>
           </div>
-
+            <div className="divider"></div>
+            <div>
+                {group && alert(group.name)}
+                  <div className="divider"></div>
+            </div>
         </div>
       </div>
     </div>
