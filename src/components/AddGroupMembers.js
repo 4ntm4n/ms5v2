@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 function AddGroupMembers({members}) {
-    console.log("members :", members);
+    const [query, setQuery] = useState("");
+    const [profiles, setProfiles] = useState([]);
+    const searchInputRef = useRef("");
+
   return (
     <div>
       <div className="form-control">
@@ -24,6 +27,7 @@ function AddGroupMembers({members}) {
             </svg>
           </span>
           <input
+            ref={searchInputRef}
             type="text"
             placeholder="Type here"
             className="input input-bordered input-sm"
