@@ -16,7 +16,7 @@ function GroupDetailPage() {
       <div className="drawer-content">
         {/* Page content here */}
         <button className="btn" onClick={handleDrawerToggle}>open drawer</button>
-        <BottomNav />
+        <BottomNav openDrawer={handleDrawerToggle}/>
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer" className="drawer-overlay"></label>
