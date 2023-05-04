@@ -19,21 +19,21 @@ function ListGroupsPage() {
     fetchGroups();
   }, []);
   return (
-    <>
-      {groups.length ? (
-        <div className="container mx-auto bg-slate-50">
-          <ul className="flex flex-col w-full lg:flex-row flex-wrap justify-around gap-1">
-            {groups.map((group) => (
-              <div key={group.id} className="grid place-items-center">
-                <GroupCard key={group.id} group={group} />
-              </div>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <p>no groups yet...</p>
-      )}
-    </>
+    <div className="bg-base-200 min-h-full">
+    {groups.length ? (
+      <div className="container mx-auto">
+        <ul className="flex flex-col lg:flex-row flex-wrap justify-center gap-1">
+          {groups.map((group) => (
+            <div key={group.id} className="grid place-items-center">
+              <GroupCard key={group.id} group={group} />
+            </div>
+          ))}
+        </ul>
+      </div>
+    ) : (
+      <p>no groups yet...</p>
+    )}
+  </div>
   );
 }
 
