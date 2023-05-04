@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import BottomNav from "../../components/BottomNav";
 import api from "../../api/AxiosInterceptors";
+import GroupMembers from "../../components/GroupMembers";
 
 function GroupDetailPage() {
   const { id } = useParams();
@@ -47,7 +48,7 @@ function GroupDetailPage() {
           </div>
             <div className="divider"></div>
             <div>
-                {group && alert(group.name)}
+                {group && <GroupMembers members={group.members} />}
                   <div className="divider"></div>
             </div>
         </div>
