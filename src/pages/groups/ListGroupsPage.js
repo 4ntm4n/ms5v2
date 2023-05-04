@@ -8,10 +8,10 @@ function ListGroupsPage() {
   // fetch groups from the db
   const fetchGroups = async () => {
     try {
-        const { data } = await api.get("/groups/");
-        setGroups(data.results);
+      const { data } = await api.get("/groups/");
+      setGroups(data.results);
     } catch (error) {
-        console.log(error);       
+      console.log(error);
     }
   };
   //  init fetch groups with useEffect on group change
@@ -20,21 +20,24 @@ function ListGroupsPage() {
   }, []);
   return (
     <>
-      <h1>list of groups you are in</h1>
-      {/* map all groups fetch from the db */}
-        {groups.length 
-            ? (groups.map(group => (
-              <GroupCard key={group.id} group={group} />
-            ))) 
-            : ("loading")}
-      {/* import add group method somewhere */}
+      {groups.length ? (
+        <div className="container mx-auto bg-slate-50">
+          <ul className="flex flex-col w-full lg:flex-row flex-wrap justify-around gap-1">
+            {groups.map((group) => (
+              <div key={group.id} className="grid place-items-center">
+                <GroupCard key={group.id} group={group} />
+              </div>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <p>no groups yet...</p>
+      )}
     </>
   );
 }
 
 export default ListGroupsPage;
-
-
 
 /* 
     group object looks like :
