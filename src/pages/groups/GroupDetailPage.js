@@ -1,8 +1,14 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import BottomNav from "../../components/BottomNav";
 
 function GroupDetailPage() {
   const { id } = useParams();
+
+  const handleOpenDrawer = () => {
+    
+  };
+
   return (
     <div className="drawer">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -11,6 +17,8 @@ function GroupDetailPage() {
         <label htmlFor="my-drawer" className="btn btn-primary drawer-button">
           Open drawer
         </label>
+
+        <BottomNav />
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer" className="drawer-overlay"></label>
