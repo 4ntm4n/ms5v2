@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 function AddGroupMembers({members}) {
     const [query, setQuery] = useState("");
     const [profiles, setProfiles] = useState([]);
     const searchInputRef = useRef("");
+
+    const handleChange = (e) => {
+        setQuery(e.currentTarget.value);
+      };
+
+    useEffect(() => {
+        console.log(query);
+    },[query]);
 
   return (
     <div>
@@ -28,6 +36,7 @@ function AddGroupMembers({members}) {
           </span>
           <input
             ref={searchInputRef}
+            onChange={handleChange}
             type="text"
             placeholder="Type here"
             className="input input-bordered input-sm"
