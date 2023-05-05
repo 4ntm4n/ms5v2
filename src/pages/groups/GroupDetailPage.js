@@ -39,7 +39,7 @@ function GroupDetailPage() {
 
   useEffect(() => {
     fetchGroup();
-  }, []);
+  }, [membersChanged]);
 
   return (
     <div className="drawer">
