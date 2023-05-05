@@ -26,6 +26,8 @@ function AddGroupMembers({ groupId, members, groupOwner , updateMembers}) {
     console.log(query);
   }, [query]);
 
+  /* add updateMembers callback in a "finally block" to make sure
+     GroupDetalPage component rerenders regardsless of errors. */
   const handleAddRemove = async (id) => {
     try {
       await api.put(`/groups/${groupId}/members/`, { profile_id: id });
