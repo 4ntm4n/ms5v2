@@ -49,7 +49,7 @@ function GroupDetailPage() {
         className="drawer-toggle"
         ref={drawerRef}
       />
-      <div className="drawer-content">
+      <div className="drawer-content flex place-content-center">
         {/* Page content here */}
         <button className="btn" onClick={handleDrawerToggle}>
           open drawer

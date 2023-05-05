@@ -9,6 +9,9 @@ import ListGroupsPage from "./pages/groups/ListGroupsPage";
 import PublicRoutes from "./utils/PublicRoutes";
 import TaskPage from "./pages/tasks/TaskPage";
 import GroupDetailPage from "./pages/groups/GroupDetailPage";
+import UnAssigned from "./pages/groups/grouptasks/UnAssigned";
+import Completed from "./pages/groups/grouptasks/Completed";
+import InProgress from "./pages/groups/grouptasks/InProgress";
 
 
 function App() {
@@ -28,7 +31,11 @@ function App() {
           <Route element={<ProtectedRoutes />}>
             <Route path="/groups">
               <Route index element={<ListGroupsPage /> } />
-              <Route path=":id" element={<GroupDetailPage /> } />
+              <Route path=":id" element={<GroupDetailPage /> } >
+                <Route index element={<UnAssigned />} />
+                <Route path="active" element={< InProgress />} />
+                <Route index="completed" element={<Completed />} />
+              </Route>
             </Route>
             <Route path="/tasks" element={<TaskPage /> } />
           </Route>
