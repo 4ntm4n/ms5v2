@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import api from "../api/AxiosInterceptors";
 
-function AddGroupMembers({ groupId, members, groupOwner }) {
+function AddGroupMembers({ groupId, members, groupOwner , updateMembers}) {
   const [query, setQuery] = useState("");
   const [profiles, setProfiles] = useState([]);
   const searchInputRef = useRef("");
@@ -31,6 +31,8 @@ function AddGroupMembers({ groupId, members, groupOwner }) {
       await api.put(`/groups/${groupId}/members/`, { profile_id: id });
     } catch (error) {
         console.log(error);
+    }finally{
+        updateMembers();
     }
   };
 
