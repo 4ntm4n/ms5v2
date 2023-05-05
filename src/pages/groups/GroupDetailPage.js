@@ -55,7 +55,7 @@ function GroupDetailPage() {
       <div className="drawer-content flex place-content-center">
         {/* Page content here */}
         <div className="flex flex-col flex-1">
-            <GroupTabs id={id} />
+            <GroupTabs  />
             <Outlet />
           </div>
         <BottomNav openDrawer={handleDrawerToggle} />
