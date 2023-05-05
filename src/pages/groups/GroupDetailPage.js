@@ -10,6 +10,11 @@ function GroupDetailPage() {
   const drawerRef = useRef();
   const [group, setGroup] = useState();
   const [addMember, setAddMember] = useState(false);
+  const [membersChanged, setMembersChanged] = useState(false);
+
+  const updateMembers = () => {
+    setMembersChanged((prevMembersChanged) => !prevMembersChanged);
+  };
 
   const handleDrawerToggle = () => {
     drawerRef.current.checked = !drawerRef.current.checked;
@@ -70,6 +75,7 @@ function GroupDetailPage() {
                 groupId={id}
                 groupOwner={group.group_owner.owner}
                 members={group.members}
+                updateMembers={updateMembers}
               />
             ) : (
               group && <GroupMembers members={group.members} />
