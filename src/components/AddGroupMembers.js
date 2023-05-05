@@ -1,17 +1,34 @@
 import React, { useEffect, useRef, useState } from "react";
+import api from "../api/AxiosInterceptors";
 
-function AddGroupMembers({members}) {
-    const [query, setQuery] = useState("");
-    const [profiles, setProfiles] = useState([]);
-    const searchInputRef = useRef("");
+function AddGroupMembers({ members }) {
+  const [query, setQuery] = useState("");
+  const [profiles, setProfiles] = useState([]);
+  const searchInputRef = useRef("");
 
-    const handleChange = (e) => {
-        setQuery(e.currentTarget.value);
-      };
+  const handleChange = (e) => {
+    setQuery(e.currentTarget.value);
+  };
 
-    useEffect(() => {
-        console.log(query);
-    },[query]);
+  const fetchProfiles = async (query) => {
+    try {
+      const { data } = await api.get(`/profiles/?search=${query}`);
+      setProfiles(data.results);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (query !== null) {
+      fetchProfiles(query);
+    }
+    console.log(query);
+  }, [query]);
+
+  useEffect(() => {
+    profiles.length && console.log(profiles);
+  }, [query]);
 
   return (
     <div>
