@@ -1,7 +1,6 @@
 import React from "react";
 
 function GroupMembers({ members }) {
-    console.log(members[0]);
     return (
       <div>
         {/* members area */}
