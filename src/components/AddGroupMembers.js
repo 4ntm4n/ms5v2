@@ -26,9 +26,13 @@ function AddGroupMembers({ groupId, members, groupOwner }) {
     console.log(query);
   }, [query]);
 
-  useEffect(() => {
-    profiles.length && console.log(profiles);
-  }, [query]);
+  const handleAddRemove = async (id) => {
+    try {
+      await api.put(`/groups/${groupId}/members/`, { profile_id: id });
+    } catch (error) {
+        console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -78,6 +82,7 @@ function AddGroupMembers({ groupId, members, groupOwner }) {
             return (
               <div
                 key={profile.id}
+                onClick={() => handleAddRemove(profile.id)}
                 className="card bg-base-100 shadow-md my-2 transition-transform duration-300 transform-gpu group hover:-translate-y-0.5 cursor-pointer"
               >
                 <div className="flex items-center">
