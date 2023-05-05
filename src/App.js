@@ -34,7 +34,7 @@ function App() {
               <Route path=":id" element={<GroupDetailPage /> } >
                 <Route index element={<UnAssigned />} />
                 <Route path="active" element={< InProgress />} />
-                <Route index="completed" element={<Completed />} />
+                <Route path="completed" element={<Completed />} />
               </Route>
             </Route>
             <Route path="/tasks" element={<TaskPage /> } />

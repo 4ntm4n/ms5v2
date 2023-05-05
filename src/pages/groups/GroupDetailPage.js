@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import BottomNav from "../../components/BottomNav";
 import api from "../../api/AxiosInterceptors";
 import GroupMembers from "../../components/GroupMembers";
@@ -51,9 +51,7 @@ function GroupDetailPage() {
       />
       <div className="drawer-content flex place-content-center">
         {/* Page content here */}
-        <button className="btn" onClick={handleDrawerToggle}>
-          open drawer
-        </button>
+        <Outlet />
         <BottomNav openDrawer={handleDrawerToggle} />
       </div>
       <div className="drawer-side">
