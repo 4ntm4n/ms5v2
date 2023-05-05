@@ -28,7 +28,6 @@ function AddGroupMembers({ groupId, members, groupOwner , updateMembers}) {
     if (query !== null) {
       fetchProfiles(query);
     }
-    console.log(query);
   }, [query]);
 
   /* add updateMembers callback in a "finally block" to make sure
