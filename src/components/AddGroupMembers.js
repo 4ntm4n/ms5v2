@@ -62,33 +62,52 @@ function AddGroupMembers({ groupId, members, groupOwner }) {
       </div>
       {/* search component result card */}
 
-      <div className="card bg-base-100 shadow-md my-2 transition-transform duration-300 transform-gpu group hover:-translate-y-0.5 cursor-pointer">
-        <div className="flex items-center">
-          <div className="avatar self-start">
-            <div className="w-10 rounded-full">
-              <img src="https://picsum.photos/200/200" alt="profile image" />
-            </div>
-          </div>
-          <p className="self-center flex-1 text-center">USERNAME</p>
-          <button className="group-hover:bg-violet-700 rounded-full w-7 h-7 m-1.5 self-end ml-auto bg-gray-500 hover:bg-violet-700">
-            <span className="sr-only">Add</span>+
-          </button>
-        </div>
-      </div>
+      {profiles.length
+        ? profiles.map((profile) => {
+            /*
+             *
+             * exclude group owner from search results and compare group members
+             * to search results to decide if member should be addable of removable
+             * */
+            const memberMatch = members.find(
+              (member) => member.owner === profile.owner
+            );
+            //group owner excluded here
+            if (profile.owner == groupOwner) return null;
 
-      <div className="card bg-base-100 shadow-md my-2 transition-transform duration-300 transform-gpu group hover:-translate-y-0.5 cursor-pointer">
-        <div className="flex items-center">
-          <div className="avatar self-start">
-            <div className="w-10 rounded-full">
-              <img src="https://picsum.photos/200/200" alt="profile image" />
-            </div>
-          </div>
-          <p className="self-center flex-1 text-center">USERNAME</p>
-          <button className="group-hover:bg-violet-700 rounded-full w-7 h-7 m-1.5 self-end ml-auto bg-gray-500 hover:bg-violet-700">
-            <span className="sr-only">remove</span>-
-          </button>
-        </div>
-      </div>
+            return (
+              <div
+                key={profile.id}
+                className="card bg-base-100 shadow-md my-2 transition-transform duration-300 transform-gpu group hover:-translate-y-0.5 cursor-pointer"
+              >
+                <div className="flex items-center">
+                  <div className="avatar self-start">
+                    <div className="w-10 rounded-full">
+                      <img
+                        src={profile.image}
+                        alt={`${profile.owner}'s profile image`}
+                      />
+                    </div>
+                  </div>
+                  <p className="self-center flex-1 text-center">
+                    {profile.owner}
+                  </p>
+                  <button className="group-hover:bg-violet-700 rounded-full w-7 h-7 m-1.5 self-end ml-auto bg-gray-500 hover:bg-violet-700 text-white">
+                    {memberMatch ? (
+                      <>
+                        <span className="sr-only">Remove</span>-
+                      </>
+                    ) : (
+                      <>
+                        <span className="sr-only">Add</span>+
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            );
+          })
+        : "search for a profile to add or remove from this group"}
     </div>
   );
 }
