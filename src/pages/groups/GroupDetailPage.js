@@ -56,22 +56,23 @@ function GroupDetailPage() {
         <div className="menu p-4 w-80 bg-base-100 text-base-content">
           {/* Sidebar content here */}
           <div className="btn-group flex justify-center">
-            <button 
-                onClick={showMembers} 
-                className="btn px-8 btn-active">
-                members</button>
-            <button 
-                onClick={showAddMember} 
-                className="btn">
+            <button onClick={showMembers} className="btn px-8 btn-active">
+              members
+            </button>
+            <button onClick={showAddMember} className="btn">
               add members
             </button>
           </div>
           <div className="divider"></div>
           <div>
             {addMember ? (
-              <AddGroupMembers />
+              <AddGroupMembers
+                groupId={id}
+                groupOwner={group.group_owner.owner}
+                members={group.members}
+              />
             ) : (
-                group && <GroupMembers members={ group.members} />
+              group && <GroupMembers members={group.members} />
             )}
             <div className="divider"></div>
           </div>

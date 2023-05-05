@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import api from "../api/AxiosInterceptors";
 
-function AddGroupMembers({ members }) {
+function AddGroupMembers({ groupId, members, groupOwner }) {
   const [query, setQuery] = useState("");
   const [profiles, setProfiles] = useState([]);
   const searchInputRef = useRef("");
