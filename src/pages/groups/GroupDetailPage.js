@@ -1,9 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Outlet, useParams } from "react-router-dom";
+import { NavLink, Outlet, useParams } from "react-router-dom";
 import BottomNav from "../../components/BottomNav";
 import api from "../../api/AxiosInterceptors";
 import GroupMembers from "../../components/GroupMembers";
 import AddGroupMembers from "../../components/AddGroupMembers";
+import GroupTabs from "../../components/GroupTabs";
 
 function GroupDetailPage() {
   const { id } = useParams();
@@ -42,6 +43,7 @@ function GroupDetailPage() {
   }, [membersChanged]);
 
   return (
+    <>
     <div className="drawer">
       <input
         id="my-drawer"
@@ -49,9 +51,13 @@ function GroupDetailPage() {
         className="drawer-toggle"
         ref={drawerRef}
       />
+
       <div className="drawer-content flex place-content-center">
         {/* Page content here */}
-        <Outlet />
+        <div className="flex flex-col flex-1">
+            <GroupTabs id={id} />
+            <Outlet />
+          </div>
         <BottomNav openDrawer={handleDrawerToggle} />
       </div>
       <div className="drawer-side">
@@ -82,7 +88,7 @@ function GroupDetailPage() {
           </div>
         </div>
       </div>
-    </div>
+    </div></>
   );
 }
 

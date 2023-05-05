@@ -29,6 +29,7 @@ function ListGroupsPage() {
             </div>
           ))}
         </ul>
+      
       </div>
     ) : (
       <p>no groups yet...</p>
