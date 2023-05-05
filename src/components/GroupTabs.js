@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-function GroupTabs({ id }) {
+function GroupTabs() {
   const [activeTab, setActiveTab] = useState("");
 
   const handleTabClick = (tabName) => {
@@ -17,7 +17,7 @@ function GroupTabs({ id }) {
         }`}
         onClick={() => handleTabClick("")}
       >
-        Tab 1
+        Unassigned
       </NavLink>
       <NavLink
         to="active"
@@ -26,7 +26,7 @@ function GroupTabs({ id }) {
         }`}
         onClick={() => handleTabClick("active")}
       >
-        Tab 2
+        Active
       </NavLink>
       <NavLink
         to="completed"
@@ -35,7 +35,7 @@ function GroupTabs({ id }) {
         }`}
         onClick={() => handleTabClick("completed")}
       >
-        Tab 3
+        Completed
       </NavLink>
     </nav>
   );
