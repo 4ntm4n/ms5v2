@@ -1,6 +1,9 @@
 import React from "react";
 
-function Task() {
+function Task({ taskInfo }) {
+
+    const { title, description, owner_name , owner_profile_image, owning_group, in_progress, completed, updated_at } = taskInfo;
+
     return (
         <div className="border border-base-300 rounded-xl card w-full">
           <div tabIndex={0} className="collapse bg-base-100 rounded-xl">
