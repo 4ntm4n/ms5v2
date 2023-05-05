@@ -8,7 +8,12 @@ function AddGroupMembers({ groupId, members, groupOwner , updateMembers}) {
 
   const handleChange = (e) => {
     setQuery(e.currentTarget.value);
+    if (e.currentTarget.value === '') {
+      fetchProfiles();
+    }
+    updateMembers();
   };
+
 
   const fetchProfiles = async (query) => {
     try {
@@ -116,7 +121,7 @@ function AddGroupMembers({ groupId, members, groupOwner , updateMembers}) {
               </div>
             );
           })
-        : "search for a profile to add or remove from this group"}
+        : "Looks like we can't find any users with that username :("}
     </div>
   );
 }
