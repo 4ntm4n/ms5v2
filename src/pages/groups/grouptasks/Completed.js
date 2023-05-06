@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import api from "../../../api/AxiosInterceptors";
 import Task from "../../../components/Task";
+
 
 function Completed() {
   const { id } = useParams();
