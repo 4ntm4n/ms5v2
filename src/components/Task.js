@@ -1,31 +1,37 @@
 import React from "react";
 
 function Task({ taskInfo }) {
+  const {
+    title,
+    description,
+    owner_name,
+    owner_profile_image,
+    owning_group,
+    in_progress,
+    completed,
+    updated_at,
+  } = taskInfo;
 
-    const { title, description, owner_name , owner_profile_image, owning_group, in_progress, completed, updated_at } = taskInfo;
-
-    return (
-        <div className="border border-base-300 rounded-xl card w-full">
-          <div tabIndex={0} className="collapse bg-base-100 rounded-xl">
-            <div className="collapse-title rounded-t-xl p-3 flex justify-between items-center">
-              <div className="text-xl font-medium">Task title</div>
-              <div className="space-x-2">
-                <button className="btn font-semibold px-2 py-1 rounded">
-                  Take Ownership
-                </button>
-                <button className="btn btn-primary font-semibold px-2 py-1 rounded">
-                  ...
-                </button>
-              </div>
-            </div>
-            <div className="collapse-content">
-              <div className="min-w-0 p-3">
-                <p className="flex-1">Description</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
+  return (
+    <div tabIndex={0} className="collapse rounded-xl w-[90%] bg-red-500 mx-auto p-0">
+  <div className="collapse-title rounded-t-xl p-3 flex justify-between items-center">
+    <div className="font-medium truncate w-[75%]">{title}</div>
+    <div className="flex flex-wrap justify-around w-auto bg-yellow-400">
+    <button className="md:block hidden btn font-semibold text-xs px-2 py-1 rounded">
+        Take Ownership
+      </button>
+      <button className="btn btn-primary font-semibold px-2 py-1 rounded">
+        ...
+      </button>
+    </div>
+  </div>
+  <div className="collapse-content">
+    <div className="">
+      <p className="">{description}</p>
+    </div>
+  </div>
+</div>
+  );
+}
 
 export default Task;
