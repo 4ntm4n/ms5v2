@@ -5,6 +5,12 @@ import AddGroupModal from "../../components/AddGroupModal";
 
 function ListGroupsPage() {
   const [groups, setGroups] = useState([]);
+  const [updateGroups, setUpdateGroups] = useState(false);
+
+  const refreshGroupsList = () => {
+    setUpdateGroups(!updateGroups);
+  };
+
 
   // fetch groups from the db
   const fetchGroups = async () => {
@@ -18,10 +24,10 @@ function ListGroupsPage() {
   //  init fetch groups with useEffect on group change
   useEffect(() => {
     fetchGroups();
-  }, []);
+  }, [updateGroups]);
   return (
     <>
-      <AddGroupModal />
+      <AddGroupModal refreshGroupsList={refreshGroupsList} />
 
     <div className="bg-base-200 min-h-full">
     {groups.length ? (

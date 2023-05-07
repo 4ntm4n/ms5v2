@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import api from "../api/AxiosInterceptors";
 
-function AddGroupModal() {
+function AddGroupModal( { refreshGroupsList }) {
     const nameRef = useRef(null);
     const descriptionRef = useRef(null);
     const modalCheckRef = useRef(null);
@@ -17,16 +17,16 @@ function AddGroupModal() {
         name: nameRef.current.value,
         description: descriptionRef.current.value,
       };
-  
+      
       try {
-        response = await api.post("/groups/", newGroup);
-        console.log(response);
+        await api.post("/groups/", newGroup);
         modalToggle();
+        
       } catch (error) {
         console.error("Error creating task:", error);
       }finally{
 
-        //update groups
+        refreshGroupsList();
       }
     };
   
