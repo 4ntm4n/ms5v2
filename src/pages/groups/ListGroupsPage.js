@@ -11,14 +11,6 @@ function ListGroupsPage() {
     setUpdateGroups(!updateGroups);
   };
 
-  const handleDelete = async (id) => {
-    try {
-        response = await api.delete(`groups/${id}/`);
-        alert(JSON.stringify(response));
-    } catch (error) {
-        console.log(error);
-    }
-  };
 
   // fetch groups from the db
   const fetchGroups = async () => {
@@ -32,7 +24,7 @@ function ListGroupsPage() {
   //  init fetch groups with useEffect on group change
   useEffect(() => {
     fetchGroups();
-  }, [updateGroups, handleDelete]);
+  }, [updateGroups]);
   return (
     <>
       <AddGroupModal refreshGroupsList={refreshGroupsList} />
@@ -43,7 +35,7 @@ function ListGroupsPage() {
         <ul className="flex flex-col lg:flex-row flex-wrap justify-center gap-1">
           {groups.map((group) => (
             <div key={group.id} className="grid place-items-center">
-              <GroupCard key={group.id} group={group} handleDelete={handleDelete} />
+              <GroupCard key={group.id} group={group} refreshGroupsList={refreshGroupsList} />
             </div>
           ))}
         </ul>

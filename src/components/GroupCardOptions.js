@@ -3,7 +3,16 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../api/AxiosInterceptors";
 
-function GroupCardOptions({groupId, handleDelete}) {
+function GroupCardOptions({groupId, refreshGroupsList}) {
+
+    const handleDelete = async (id) => {
+        try {
+           await api.delete(`groups/${id}/`);
+           refreshGroupsList();
+        } catch (error) {
+            console.log(error);
+        }
+      };
 
 
   return (
