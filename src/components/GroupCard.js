@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import GroupCardOptions from "./GroupCardOptions";
 
-function GroupCard({ group }) {
+function GroupCard({ group, handleDelete }) {
   const { id, name, description, group_owner, members } = group;
 
   const groupSize = members.length;
@@ -16,7 +16,7 @@ function GroupCard({ group }) {
         </div>
       </div>
       <div className="flex justify-end">
-        <GroupCardOptions />
+        <GroupCardOptions groupId={id}  handleDelete={handleDelete} />
       </div>
       <div className="card-body mt-20">
         <h2 className="card-title">{group.name}</h2>

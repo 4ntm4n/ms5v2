@@ -1,8 +1,11 @@
 import React from "react";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import api from "../api/AxiosInterceptors";
 
-function GroupCardOptions() {
+function GroupCardOptions({groupId, handleDelete}) {
+
+
   return (
     <div className="dropdown dropdown-left">
       <label tabIndex={0} className="btn m-1">
@@ -13,7 +16,7 @@ function GroupCardOptions() {
         className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
       >
         <li>
-          <a>Delete group</a>
+          <a onClick={() => handleDelete(groupId)}>Delete group</a>
         </li>
         <li>
           <a>Edit group info</a>
