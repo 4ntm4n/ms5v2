@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/auth/LoginPage";
@@ -32,7 +32,7 @@ function App() {
             <Route path="/groups">
               <Route index element={<ListGroupsPage /> } />
               <Route path=":id" element={<GroupDetailPage /> } >
-                <Route index element={<UnAssigned />} />
+                <Route index id={useParams()} element={<UnAssigned />} />
                 <Route path="active" element={< InProgress />} />
                 <Route path="completed" element={<Completed />} />
               </Route>

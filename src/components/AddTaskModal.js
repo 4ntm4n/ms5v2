@@ -1,21 +1,45 @@
-import React from "react";
+import React, { useRef, useState } from "react";
+import api from "../api/AxiosInterceptors";
 
-function AddTaskModal() {
+function AddTaskModal({ groupId, updateTasks }) {
+  const titleRef = useRef(null);
+  const descriptionRef = useRef(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const newTask = {
+      title: titleRef.current.value,
+      description: descriptionRef.current.value,
+      owning_group: groupId,
+      owner: null,
+      in_progress: false,
+      completed: false,
+    };
+
+    try {
+      const response = await api.post("/tasks/create/", newTask);
+      console.log("Task created:", response.data);
+    } catch (error) {
+      console.error("Error creating task:", error);
+    }finally{
+        updateTasks();
+    }
+  };
+
+
   return (
     <>
-      <label htmlFor="add-task-modal">
-        open modal
-      </label>
-
       {/* Put this part before </body> tag */}
       <input type="checkbox" id="add-task-modal" className="modal-toggle" />
       <div className="modal modal-bottom sm:modal-middle">
-        <form className="modal-box">
+        <form className="modal-box" onSubmit={handleSubmit}>
           <h3 className="font-bold text-lg mb-3">Create new task</h3>
 
           <label className="input-group input-group-vertical mb-3">
             <span>Title</span>
             <input
+              ref={titleRef}
               name="title"
               type="text"
               placeholder="add a title here"
@@ -24,8 +48,9 @@ function AddTaskModal() {
           </label>
 
           <label className="input-group input-group-vertical mb-7">
-            <span >Description</span>
+            <span>Description</span>
             <textArea
+              ref={descriptionRef}
               className="resize-none textarea textarea-bordered h-24"
               name="description"
               placeholder="give your task some extra content (optional)"
@@ -34,11 +59,12 @@ function AddTaskModal() {
 
           <div className="modal-action">
             <label htmlFor="add-task-modal">
-              <button className="btn btn-outline" >cancel</button>
-              
+              <a className="btn btn-outline">cancel</a>
             </label>
-            <label htmlFor="add-task-modal">
-              <button className="btn btn-primary" type="submit">Add Task</button>
+            <label >
+              <button htmlFor="add-task-modal" className="btn btn-primary" type="submit">
+                Add Task
+              </button>
             </label>
           </div>
         </form>

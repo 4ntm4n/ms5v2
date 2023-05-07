@@ -13,10 +13,12 @@ function GroupDetailPage() {
   const [group, setGroup] = useState();
   const [addMember, setAddMember] = useState(false);
   const [membersChanged, setMembersChanged] = useState(false);
-
+  
   const updateMembers = () => {
     setMembersChanged((prevMembersChanged) => !prevMembersChanged);
   };
+
+ 
 
   const handleDrawerToggle = () => {
     drawerRef.current.checked = !drawerRef.current.checked;
@@ -58,7 +60,6 @@ function GroupDetailPage() {
         <div className="flex flex-col flex-1">
             <GroupTabs  />
             <Outlet />
-            <AddTaskModal></AddTaskModal>
           </div>
         <BottomNav openDrawer={handleDrawerToggle} />
       </div>
