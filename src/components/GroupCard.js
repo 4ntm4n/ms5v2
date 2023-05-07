@@ -16,7 +16,7 @@ function GroupCard({ group, refreshGroupsList }) {
         </div>
       </div>
       <div className="flex justify-end">
-        <GroupCardOptions groupId={id}  refreshGroupsList={refreshGroupsList} />
+        <GroupCardOptions refreshGroupsList={refreshGroupsList} groupInfo={{id, name, description}}/>
       </div>
       <div className="card-body mt-20">
         <h2 className="card-title">{group.name}</h2>
