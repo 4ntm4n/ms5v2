@@ -1,13 +1,20 @@
 import React, { useRef, useState } from "react";
 import api from "../api/AxiosInterceptors";
+import { useNavigate } from "react-router-dom";
 
 function AddTaskModal({ groupId, updateTasks }) {
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
   const modalCheckRef = useRef(null);
+  const navigate = useNavigate();
 
   const modalToggle = () => {
     modalCheckRef.current.checked = !modalCheckRef.current.checked;
+  };
+
+  const clearFormFields = () => {
+    titleRef.current.value = "";
+    descriptionRef.current.value = "";
   };
 
   const handleSubmit = async (e) => {
@@ -25,10 +32,10 @@ function AddTaskModal({ groupId, updateTasks }) {
     try {
       await api.post("/tasks/create/", newTask);
       modalToggle();
+      clearFormFields();
     } catch (error) {
       console.error("Error creating task:", error);
     }finally{
-        
         updateTasks();
     }
   };
@@ -54,12 +61,12 @@ function AddTaskModal({ groupId, updateTasks }) {
 
           <label className="input-group input-group-vertical mb-7">
             <span>Description</span>
-            <textArea
+            <textarea
               ref={descriptionRef}
               className="resize-none textarea textarea-bordered h-24"
               name="description"
               placeholder="give your task some extra content (optional)"
-            ></textArea>
+            ></textarea>
           </label>
 
           <div className="modal-action">

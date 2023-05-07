@@ -8,10 +8,12 @@ import AddTaskModal from "../../../components/AddTaskModal";
 function Completed() {
   const { id } = useParams();
   const [completedTasks, setcompletedTasks] = useState([]);
- 
+  const [tasksChanged, setTasksChanged] = useState(false);
+  
   const updateTasks = () => {
     setTasksChanged((prevTasksChanged) => !prevTasksChanged);
   };
+
 
   const fetchTasks = async () => {
     try {
@@ -25,7 +27,7 @@ function Completed() {
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [tasksChanged]);
 
   return (
     <>

@@ -8,10 +8,12 @@ import AddTaskModal from "../../../components/AddTaskModal";
 function InProgress() {
   const { id } = useParams();
   const [activeTasks, setactiveTasks] = useState([]);
+  const [tasksChanged, setTasksChanged] = useState(false);
   
   const updateTasks = () => {
     setTasksChanged((prevTasksChanged) => !prevTasksChanged);
   };
+
 
   const fetchTasks = async () => {
     try {
@@ -25,7 +27,7 @@ function InProgress() {
 
   useEffect(() => {
     fetchTasks();
-  }, []);
+  }, [tasksChanged]);
 
   return (
     <>
