@@ -9,6 +9,11 @@ function AddGroupModal( { refreshGroupsList }) {
     const modalToggle = () => {
       modalCheckRef.current.checked = !modalCheckRef.current.checked;
     };
+
+    const clearFormFields = () => {
+        titleRef.current.value = "";
+        descriptionRef.current.value = "";
+      };
   
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -21,7 +26,7 @@ function AddGroupModal( { refreshGroupsList }) {
       try {
         await api.post("/groups/", newGroup);
         modalToggle();
-        
+        clearFormFields();
       } catch (error) {
         console.error("Error creating task:", error);
       }finally{
@@ -29,6 +34,7 @@ function AddGroupModal( { refreshGroupsList }) {
         refreshGroupsList();
       }
     };
+    
   
     return (
       <>

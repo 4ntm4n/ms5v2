@@ -1,12 +1,12 @@
 import React, { useRef, useState } from "react";
 import api from "../api/AxiosInterceptors";
-import { useNavigate } from "react-router-dom";
+
 
 function AddTaskModal({ groupId, updateTasks }) {
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
   const modalCheckRef = useRef(null);
-  const navigate = useNavigate();
+
 
   const modalToggle = () => {
     modalCheckRef.current.checked = !modalCheckRef.current.checked;
