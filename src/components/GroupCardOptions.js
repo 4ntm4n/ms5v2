@@ -7,7 +7,7 @@ import UpdateGroupModal from "./UpdateGroupModal";
 function GroupCardOptions({groupInfo, refreshGroupsList}) {
 
     const {id, name, description} = groupInfo;
-
+    
 
     const handleDelete = async () => {
         try {

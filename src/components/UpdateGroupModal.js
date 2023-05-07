@@ -6,6 +6,11 @@ function UpdateGroupModal({ groupInfo, handleUpdate }) {
     name,
     description,
   });
+  const modalCheckRef = useRef(null);
+
+  const modalToggle = () => {
+    modalCheckRef.current.checked = !modalCheckRef.current.checked;
+  };
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -14,12 +19,14 @@ function UpdateGroupModal({ groupInfo, handleUpdate }) {
       ...prevInfo,
       [name]: value,
     }));
+    
   };
+
 
   return (
     <>
       {/* Put this part before </body> tag */}
-      <input type="checkbox" id="edit-group-modal" className="modal-toggle" />
+      <input type="checkbox" id="edit-group-modal" className="modal-toggle" ref={modalCheckRef} />
       <div className="modal modal-bottom sm:modal-middle">
         <form className="modal-box" onSubmit={handleUpdate}>
           <h3 className="font-bold text-lg mb-3"></h3>
@@ -55,6 +62,7 @@ function UpdateGroupModal({ groupInfo, handleUpdate }) {
                 htmlFor="edit-group-modal"
                 className="btn btn-primary"
                 type="submit"
+                onClick={modalToggle}
               >
                 Update Group info
               </button>
