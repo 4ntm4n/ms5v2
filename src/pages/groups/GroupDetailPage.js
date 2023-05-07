@@ -5,6 +5,7 @@ import api from "../../api/AxiosInterceptors";
 import GroupMembers from "../../components/GroupMembers";
 import AddGroupMembers from "../../components/AddGroupMembers";
 import GroupTabs from "../../components/GroupTabs";
+import AddTaskModal from "../../components/AddTaskModal";
 
 function GroupDetailPage() {
   const { id } = useParams();
@@ -57,6 +58,7 @@ function GroupDetailPage() {
         <div className="flex flex-col flex-1">
             <GroupTabs  />
             <Outlet />
+            <AddTaskModal></AddTaskModal>
           </div>
         <BottomNav openDrawer={handleDrawerToggle} />
       </div>
