@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import GroupCardOptions from "./GroupCardOptions";
 
 function GroupCard({ group }) {
   const { id, name, description, group_owner, members } = group;
@@ -13,6 +14,9 @@ function GroupCard({ group }) {
           <img src={group_owner.image} className="object-cover" />
           {/* img with source to group owner */}
         </div>
+      </div>
+      <div className="flex justify-end">
+        <GroupCardOptions />
       </div>
       <div className="card-body mt-20">
         <h2 className="card-title">{group.name}</h2>
