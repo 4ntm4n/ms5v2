@@ -4,6 +4,12 @@ import api from "../api/AxiosInterceptors";
 function AddTaskModal({ groupId, updateTasks }) {
   const titleRef = useRef(null);
   const descriptionRef = useRef(null);
+  const modalCheckRef = useRef(null);
+
+  const modalToggle = () => {
+    modalCheckRef.current.checked = !modalCheckRef.current.checked;
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,11 +24,12 @@ function AddTaskModal({ groupId, updateTasks }) {
     };
 
     try {
-      const response = await api.post("/tasks/create/", newTask);
-      console.log("Task created:", response.data);
+      await api.post("/tasks/create/", newTask);
+      modalToggle();
     } catch (error) {
       console.error("Error creating task:", error);
     }finally{
+        
         updateTasks();
     }
   };
@@ -31,7 +38,7 @@ function AddTaskModal({ groupId, updateTasks }) {
   return (
     <>
       {/* Put this part before </body> tag */}
-      <input type="checkbox" id="add-task-modal" className="modal-toggle" />
+      <input ref={modalCheckRef} type="checkbox" id="add-task-modal" className="modal-toggle" />
       <div className="modal modal-bottom sm:modal-middle">
         <form className="modal-box" onSubmit={handleSubmit}>
           <h3 className="font-bold text-lg mb-3">Create new task</h3>

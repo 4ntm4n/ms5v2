@@ -1,11 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
-import { NavLink, Outlet, useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import BottomNav from "../../components/BottomNav";
 import api from "../../api/AxiosInterceptors";
 import GroupMembers from "../../components/GroupMembers";
 import AddGroupMembers from "../../components/AddGroupMembers";
 import GroupTabs from "../../components/GroupTabs";
-import AddTaskModal from "../../components/AddTaskModal";
+
 
 function GroupDetailPage() {
   const { id } = useParams();
@@ -17,8 +17,6 @@ function GroupDetailPage() {
   const updateMembers = () => {
     setMembersChanged((prevMembersChanged) => !prevMembersChanged);
   };
-
- 
 
   const handleDrawerToggle = () => {
     drawerRef.current.checked = !drawerRef.current.checked;
