@@ -10,7 +10,6 @@ function AddTaskModal({ groupId, updateTasks }) {
     modalCheckRef.current.checked = !modalCheckRef.current.checked;
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,7 +32,6 @@ function AddTaskModal({ groupId, updateTasks }) {
         updateTasks();
     }
   };
-
 
   return (
     <>
