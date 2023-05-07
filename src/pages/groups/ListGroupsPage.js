@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import api from "../../api/AxiosInterceptors";
 import GroupCard from "../../components/GroupCard";
+import AddGroupModal from "../../components/AddGroupModal";
 
 function ListGroupsPage() {
   const [groups, setGroups] = useState([]);
@@ -19,6 +20,9 @@ function ListGroupsPage() {
     fetchGroups();
   }, []);
   return (
+    <>
+      <AddGroupModal />
+
     <div className="bg-base-200 min-h-full">
     {groups.length ? (
       <div className="container mx-auto">
@@ -35,6 +39,8 @@ function ListGroupsPage() {
       <p>no groups yet...</p>
     )}
   </div>
+
+  </>
   );
 }
 
