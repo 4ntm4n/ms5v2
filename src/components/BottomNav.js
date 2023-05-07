@@ -5,17 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function BottomNav({ openDrawer }) {
   return (
     <div className="btm-nav">
-      <label>
+      <label onClick={openDrawer}>
       <FontAwesomeIcon icon={faUsers} /> 
-        <button onClick={openDrawer}>
           <span className="btm-nav-label">Group</span>
-        </button>
       </label>
       <label htmlFor="add-task-modal">
-      <FontAwesomeIcon icon={faPlusSquare} /> 
-        <button htmlFor="add-task-modal">
+        <FontAwesomeIcon icon={faPlusSquare} /> 
           <span className="btm-nav-label">Add Task</span>
-        </button>
       </label>
     </div>
   );
