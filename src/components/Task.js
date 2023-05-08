@@ -10,6 +10,7 @@ function Task({ taskInfo,  updateTasks}) {
     setIsCollapsed(!isCollapsed);
   };
   const {
+    id,
     title,
     description,
     owner_name,

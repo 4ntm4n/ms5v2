@@ -6,14 +6,14 @@ import UpdateTaskModal from "./UpdateTaskModal";
 function TaskOptions({taskInfo, updateTasks}) {
    const {id, name, description} = taskInfo;
 
-  /* const handleDelete = async () => {
+  const handleDelete = async () => {
         try {
-           await api.delete(`groups/${id}/`);
-           refreshGroupsList();
+           await api.delete(`tasks/${id}/`);
+           updateTasks();
         } catch (error) {
             console.log(error);
         }
-      }; */
+      };
 
       const handleUpdate = async (e) => {
         e.preventDefault();
@@ -41,10 +41,10 @@ function TaskOptions({taskInfo, updateTasks}) {
           className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
         >
           <li>
-            <a>Delete Task</a>
+            <a onClick={handleDelete}>Delete Task</a>
           </li>
           <li>
-            <label htmlFor="edit-group-modal">Edit task info</label>
+            <label htmlFor={`edit-task-modal${id}`}>Edit task info</label>
           </li>
         </ul>
       </div>

@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 
 function UpdateTaskModal({taskInfo, handleUpdate}) {
-    const { title, description } = taskInfo;
+    const {id, title, description } = taskInfo;
     const [input, setInput] = useState({
       title,
       description,
@@ -25,7 +25,7 @@ function UpdateTaskModal({taskInfo, handleUpdate}) {
     return (
       <>
         {/* Put this part before </body> tag */}
-        <input type="checkbox" id="edit-group-modal" className="modal-toggle" ref={modalCheckRef} />
+        <input type="checkbox" id={`edit-task-modal${id}`} className="modal-toggle" ref={modalCheckRef} />
         <div className="modal modal-bottom sm:modal-middle">
           <form className="modal-box" onSubmit={handleUpdate}>
             <h3 className="font-bold text-lg mb-3"></h3>
@@ -53,12 +53,12 @@ function UpdateTaskModal({taskInfo, handleUpdate}) {
             </label>
   
             <div className="modal-action"> 
-              <label htmlFor="edit-group-modal">
+              <label htmlFor={`edit-task-modal${id}`}>
                 <a className="btn btn-outline">cancel</a>
               </label>
               <label>
                 <button
-                  htmlFor="edit-group-modal"
+                  htmlFor={`edit-task-modal${id}`}
                   className="btn btn-primary"
                   type="submit"
                   onClick={modalToggle}
