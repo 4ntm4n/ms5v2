@@ -34,7 +34,7 @@ function TaskOptions() {
   return (
     <>
     <div className="dropdown dropdown-left">
-      <label tabIndex={0} className="btn m-1">
+      <label tabIndex={0} className="btn btn-primary m-1 w-12">
         <FontAwesomeIcon icon={faEllipsisVertical} />
       </label>
       <ul

@@ -31,11 +31,11 @@ function Task({ taskInfo }) {
               </div>
             </div>
           </div>
-          <div className=" p-4 w-4/6" onClick={toggleCollapse}>
+          <div className=" p-4 w-4/6 cursor-pointer" onClick={toggleCollapse}>
             <h2 className="text-lg text-center">{title}</h2>
           </div>
-          <div className="btn w-12 mt-2">
-            <FontAwesomeIcon icon={faEllipsisVertical} />
+          <div className="mt-2 ">
+            <TaskOptions />
           </div>
         </div>
 
