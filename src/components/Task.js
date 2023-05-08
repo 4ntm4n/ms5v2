@@ -3,7 +3,7 @@ import TaskOptions from "./TaskOptions";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function Task({ taskInfo }) {
+function Task({ taskInfo,  updateTasks}) {
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const toggleCollapse = () => {
@@ -35,7 +35,7 @@ function Task({ taskInfo }) {
             <h2 className="text-lg text-center">{title}</h2>
           </div>
           <div className="mt-2 ">
-            <TaskOptions />
+            <TaskOptions taskInfo={taskInfo} updateTasks={updateTasks}/>
           </div>
         </div>
 

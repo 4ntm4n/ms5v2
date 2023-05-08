@@ -22,7 +22,6 @@ function UpdateGroupModal({ groupInfo, handleUpdate }) {
     
   };
 
-
   return (
     <>
       {/* Put this part before </body> tag */}
