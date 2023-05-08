@@ -63,7 +63,7 @@ function UpdateTaskModal({taskInfo, handleUpdate}) {
                   type="submit"
                   onClick={modalToggle}
                 >
-                  Update Group info
+                  Update Task info
                 </button>
               </label>
             </div>
