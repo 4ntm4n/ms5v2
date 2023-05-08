@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../api/AxiosInterceptors";
 import UpdateTaskModal from "./UpdateTaskModal";
 function TaskOptions({ taskInfo, updateTasks }) {
-  const { id, title, description, in_progress, completed, owner} = taskInfo;
+  const { id, title, description, in_progress, completed, owner } = taskInfo;
 
   const handleDelete = async () => {
     try {
@@ -14,7 +14,7 @@ function TaskOptions({ taskInfo, updateTasks }) {
       console.log(error);
     }
   };
-  
+
   const handleUpdate = async (e) => {
     e.preventDefault();
     const updateInfo = {
@@ -32,13 +32,21 @@ function TaskOptions({ taskInfo, updateTasks }) {
 
   const handleClaim = async () => {
     try {
-        await api.patch(`tasks/${id}/`, {in_progress: true});
-        updateTasks();
+      await api.patch(`tasks/${id}/`, { in_progress: true });
+      updateTasks();
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
 
+  const handleComplete = async () => {
+    try {
+      await api.patch(`tasks/${id}/`, { completed: true });
+      updateTasks();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -51,21 +59,36 @@ function TaskOptions({ taskInfo, updateTasks }) {
           className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
         >
           <li>
-            <a className="bg-primary
-                 text-white hover:bg-base-300 
-                 hover:text-black"
-                 onClick={handleClaim}
-                 >
+            {in_progress ? (
+              <a
+                className="bg-primary
+                text-white hover:bg-base-300 
+                hover:text-black"
+                onClick={handleComplete}
+              >
+                Mark as complete
+              </a>
+            ) : (
+              <a
+                className="bg-primary
+                text-white hover:bg-base-300 
+                hover:text-black"
+                onClick={handleClaim}
+              >
                 Take ownership
-            </a>
-          </li>
-          
-          <li>
-            <label htmlFor={`edit-task-modal${id}`} >Edit task info</label>
+              </a>
+            )}
           </li>
 
           <li>
-            <a  className="text-error" onClick={handleDelete}>Delete Task</a>
+          </li>
+
+        
+
+          <li>
+            <a className="text-error" onClick={handleDelete}>
+              Delete Task
+            </a>
           </li>
         </ul>
       </div>
