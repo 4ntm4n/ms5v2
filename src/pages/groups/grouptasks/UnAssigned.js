@@ -15,7 +15,7 @@ function UnAssigned() {
 
   const fetchTasks = async () => {
     try {
-      const { data } = await api.get(`/tasks/?owning_group__id=${id}`);
+      const { data } = await api.get(`/tasks/?owning_group__id=${id}&in_progress=false&completed=false`);
       //console.log(data.results);
       setUnasTasks(data.results);
     } catch (error) {
