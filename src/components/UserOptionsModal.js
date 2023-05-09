@@ -27,6 +27,13 @@ function UserOptionsModal() {
     });
   };
 
+  const renderImagePreview = () => {
+    if (!profileImg.img) return null;
+  
+    const imageUrl = URL.createObjectURL(profileImg.img);
+    return <img src={imageUrl} alt="profile image preview" className="w-full h-full object-cover inset-0" />;
+  };
+
   return (
     <>
       <input
@@ -48,16 +55,22 @@ function UserOptionsModal() {
           />
             <h3>choose a new profile picture</h3>
           <div
-            className="w-[120px] 
-                       h-[120px] 
+            className="w-[150px] 
+                       h-[150px] 
                      text-white 
                      bg-slate-400
                      flex 
                      place-items-center
                      justify-center
+                     cursor-pointer
+                     relative 
+                     overflow-hidden
+                     rounded-full
                      "
+            onClick={triggerImgChoice}
           >
-            choose image
+            {!renderImagePreview() ? "choose image" : renderImagePreview() }
+           
           </div>
          
           
@@ -69,7 +82,7 @@ function UserOptionsModal() {
             onClick={modalToggle}
             type="submit"
           >
-            update profile img
+            update
           </button>
           </div>
         </form>
