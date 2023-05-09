@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import NavUserMenu from "./NavUserMenu";
+import UserOptions from "./UserOptions";
+import UserOptionsModal from "./UserOptionsModal";
 
 function Navbar({ children }) {
   const { user, logout } = useAuth();
@@ -18,8 +19,8 @@ function Navbar({ children }) {
   }, [user, login]);
 
   const authNav = (
-    <>
-      <li> {user && <NavUserMenu image={user.image} />}</li>
+    <> 
+      <li>  </li>
       <li>
         <NavLink to="/groups">Groups</NavLink> 
       </li><li>
@@ -65,7 +66,10 @@ function Navbar({ children }) {
             </label>
           </div>
           <div className="flex-1 px-2 mx-2">GroupTask</div>
+          <div className="flex-2 px-2 mx-2">{user &&  <label htmlFor="my-modal-6" className="cursor-pointer"  > <UserOptions /> </label> }</div>
+          
           <div className="flex-none hidden lg:block">
+          
             <ul className="menu menu-horizontal">
               {/* Navbar menu content here */}
               {login ? authNav : unAuthNav}
@@ -77,11 +81,16 @@ function Navbar({ children }) {
       </div>
       <div className="drawer-side">
         <label htmlFor="my-drawer-3" className="drawer-overlay"></label>
+          
         <ul className="menu p-4 w-80 bg-base-100">
           {/* Sidebar content here */}
+          
           {login ? authNav : unAuthNav}
         </ul>
       </div>
+
+
+      <UserOptionsModal user={user} /> 
     </div>
   );
 }
