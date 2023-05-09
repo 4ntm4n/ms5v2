@@ -2,18 +2,17 @@ import React, { useState } from "react";
 import TaskOptions from "./TaskOptions";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAuth } from "../contexts/AuthContext";
 
 function Task({ taskInfo, updateTasks }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const { user } = useAuth();
 
-  const toggleCollapse = () => {
-    setIsCollapsed(!isCollapsed);
-  };
   const {
     id,
     title,
     description,
-    owner_name,
+    owner,
     owner_profile_image,
     owning_group,
     in_progress,
@@ -21,25 +20,33 @@ function Task({ taskInfo, updateTasks }) {
     updated_at,
   } = taskInfo;
 
+  const owningUser = user.userId === owner ? true : false;
+
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
+
+  console.log(taskInfo);
   return (
     <>
       <div className="w-[90%] mx-auto shadow-xl rounded-lg">
         <div className="flex justify-around rounded-lg">
           <div className="w-1/6 flex items-center">
-            {in_progress 
-                ? (<div className="avatar">
+            {in_progress ? (
+              <div className="avatar">
                 <div className="w-12 rounded-full">
-                  <img src="https://picsum.photos/200/200" />
+                  <img src={owner_profile_image} />
                 </div>
-              </div>)
-                : null
-            }
+              </div>
+            ) : null}
           </div>
           <div className=" p-4 w-4/6 cursor-pointer" onClick={toggleCollapse}>
             <h2 className="text-lg text-center">{title}</h2>
           </div>
           <div className="mt-2 justify-self-end">
-            <TaskOptions taskInfo={taskInfo} updateTasks={updateTasks} />
+            <div className={owner === null || owningUser ? "" : "invisible"}>
+              <TaskOptions taskInfo={taskInfo} updateTasks={updateTasks} />
+            </div>
           </div>
         </div>
 

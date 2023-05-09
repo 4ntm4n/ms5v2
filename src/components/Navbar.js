@@ -18,7 +18,7 @@ function Navbar({ children }) {
 
   const authNav = (
     <>
-      <li>hello</li>
+      <li>hello {user && user.username}</li>
       <li>
         <NavLink to="/groups">Groups</NavLink> 
       </li><li>

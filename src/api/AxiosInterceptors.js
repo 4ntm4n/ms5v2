@@ -12,21 +12,20 @@ import axios from "axios";
  * endpoint on the server, the rest of the requests will be stored in a promise
  * and updated once a new refresh token is obtained.*/
 
-
 const baseURL = "http://localhost:8000";
-
-let tokens = localStorage.getItem("tokens")
-  ? JSON.parse(localStorage.getItem("tokens"))
-  : null;
-
-const api = axios.create({
-  baseURL,
-  headers: { Authorization: `Bearer ${tokens?.access}` },
-});
 
 let isRefreshing = false;
 let refreshSubscribers = [];
 
+function getTokens() {
+  return localStorage.getItem("tokens")
+    ? JSON.parse(localStorage.getItem("tokens"))
+    : null;
+}
+const api = axios.create({
+  baseURL,
+  headers: { Authorization: `Bearer ${getTokens()?.access}` },
+});
 
 /*
  *
@@ -38,21 +37,23 @@ let refreshSubscribers = [];
  * using setting the callback variable. refreshSubscribers are emptied,
  * and finally isRefreshing is toggled back to initial state.*/
 function refreshTokenAndNotifySubscribers() {
-    if (!isRefreshing) {
-      isRefreshing = true;
-      return axios
-        .post(`${baseURL}/api/token/refresh/`, { refresh: tokens.refresh })
-        .then((response) => {
-          tokens = response.data;
-          localStorage.setItem("tokens", JSON.stringify(response.data));
-          refreshSubscribers.forEach((callback) => callback(response.data.access));
-          refreshSubscribers = [];
-        })
-        .finally(() => {
-          isRefreshing = false;
-        });
-    }
+  if (!isRefreshing) {
+    isRefreshing = true;
+    const tokens = getTokens();
+    return axios
+      .post(`${baseURL}/api/token/refresh/`, { refresh: tokens.refresh })
+      .then((response) => {
+        localStorage.setItem("tokens", JSON.stringify(response.data));
+        refreshSubscribers.forEach((callback) =>
+          callback(response.data.access)
+        );
+        refreshSubscribers = [];
+      })
+      .finally(() => {
+        isRefreshing = false;
+      });
   }
+}
 
 //function to subscribe to token refresh
 const onAccessTokenRefresh = (callback) => {
@@ -65,15 +66,10 @@ const onAccessTokenRefresh = (callback) => {
  * If it doesnt, it tries to get it from the localStorage.
  * If it doesnt exisit there, the token i set to null */
 api.interceptors.request.use((config) => {
-    if (!tokens) {
-      tokens = localStorage.getItem("tokens")
-        ? JSON.parse(localStorage.getItem("tokens"))
-        : null;
-    }
-    config.headers.Authorization = `Bearer ${tokens.access}`;
-    return config;
-  });
-
+  const tokens = getTokens();
+  config.headers.Authorization = `Bearer ${tokens.access}`;
+  return config;
+});
 /*
  *
  * the promise in this interceptor waits for a new access token, creates a
@@ -81,26 +77,30 @@ api.interceptors.request.use((config) => {
  * token and retries the original request; it will not execute until the
  * refresh token process has completed */
 api.interceptors.response.use(
-    (response) => response,
-    (error) => {
-      const { config, response: { status } } = error;
-      const originalRequest = config;
-  
-      if (status === 401) {
-        if (!isRefreshing) {
-          refreshTokenAndNotifySubscribers();
-        }
-        const retryOriginalRequest = new Promise((resolve) => {
-          onAccessTokenRefresh((newAccessToken) => {
-            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-            resolve(axios(originalRequest));
-          });
-        });
-        return retryOriginalRequest;
+  (response) => response,
+  (error) => {
+    const {
+      config,
+      response: { status },
+    } = error;
+    const originalRequest = config;
+    const tokens = getTokens();
+
+    if (status === 401) {
+      if (!isRefreshing) {
+        refreshTokenAndNotifySubscribers();
       }
-  
-      return Promise.reject(error);
+      const retryOriginalRequest = new Promise((resolve) => {
+        onAccessTokenRefresh((newAccessToken) => {
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          resolve(axios(originalRequest));
+        });
+      });
+      return retryOriginalRequest;
     }
-  );
-//export axios instance
+
+    return Promise.reject(error);
+  }
+);
+
 export default api;

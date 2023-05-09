@@ -1,10 +1,13 @@
 import React from "react";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import api from "../api/AxiosInterceptors";
 import UpdateTaskModal from "./UpdateTaskModal";
+import api from "../api/AxiosInterceptors";
+
 function TaskOptions({ taskInfo, updateTasks }) {
   const { id, in_progress, completed, owner } = taskInfo;
+
+
 
   const handleDelete = async () => {
     try {
