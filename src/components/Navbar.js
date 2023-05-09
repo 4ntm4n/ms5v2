@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import NavUserMenu from "./NavUserMenu";
 
 function Navbar({ children }) {
   const { user, logout } = useAuth();
@@ -18,7 +19,7 @@ function Navbar({ children }) {
 
   const authNav = (
     <>
-      <li>hello {user && user.username}</li>
+      <li> {user && <NavUserMenu image={user.image} />}</li>
       <li>
         <NavLink to="/groups">Groups</NavLink> 
       </li><li>
