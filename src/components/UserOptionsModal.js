@@ -1,30 +1,34 @@
 import React, { useRef, useState } from "react";
 
 function UserOptionsModal({ user }) {
-    const {userId, username, image} = user;
-    const imgInputRef = useRef();
-    const [profileImg, setProfileImg] = useState();
-
-    
+  const { userId, username, image } = user;
+  const imgInputRef = useRef(null);
+  const [profileImg, setProfileImg] = useState({
+    img: null,
+  });
+  const modalCheckRef = useRef(null);
+  
+  const modalToggle = () => {
+    modalCheckRef.current.checked = !modalCheckRef.current.checked;
+  };
 
   return (
     <>
-      <input type="checkbox" id="my-modal-6" className="modal-toggle" />
+      <input ref={modalCheckRef} type="checkbox" id="my-modal-6" className="modal-toggle" />
       <div className="modal modal-bottom sm:modal-middle">
-        <div className="modal-box">
-          <h3 className="font-bold text-lg">
-            Congratulations random Internet user!
-          </h3>
-          <p className="py-4">
-            Youve been selected for a chance to get one year of subscription to
-            use Wikipedia for free!
-          </p>
+        <form className="modal-box">
+          <input 
+            type="file"
+            className="hidden"
+            accept="image/*"
+            ref={imgInputRef}
+          />
+            <button className="btn btn-sm btn-primary" onClick={modalToggle} type="submit">update profile img</button>
+
           <div className="modal-action">
-            <label htmlFor="my-modal-6" className="btn">
-              Yay!
-            </label>
+            <button onClick={modalToggle} >close</button>
           </div>
-        </div>
+        </form>
       </div>
     </>
   );
