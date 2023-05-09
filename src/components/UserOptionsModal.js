@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import api from "../api/AxiosInterceptors";
 
 function UserOptionsModal() {
   const {user} = useAuth();
@@ -34,6 +35,24 @@ function UserOptionsModal() {
     return <img src={imageUrl} alt="profile image preview" className="w-full h-full object-cover inset-0" />;
   };
 
+  const handleUpload = async (e) => {
+    e.preventDefault();
+  
+    if (!profileImg.img) {
+      console.log("No image selected");
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append("image", profileImg.img);
+  
+    try {
+        await api.patch(`/profiles/${user.userId}/`, formData);
+    } catch (error) {
+        console.log(error);
+    }
+  };
+
   return (
     <>
       <input
@@ -44,7 +63,7 @@ function UserOptionsModal() {
       />
         
       <div className="modal modal-bottom sm:modal-middle">
-        <form className="modal-box ">
+        <form className="modal-box" onSubmit={handleUpload}>
             <div className="flex flex-col place-items-center gap-4" >
           <input
             type="file"

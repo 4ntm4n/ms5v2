@@ -1,5 +1,9 @@
 import axios from "axios";
 
+axios.defaults.headers.post["Content-Type"] = "multipart/form-data";
+axios.defaults.withCredentials = true;
+
+
 /*
  *
  * purpose of this interceptors file is to build one axios instance

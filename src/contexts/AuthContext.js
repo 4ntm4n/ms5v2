@@ -77,6 +77,7 @@ export const AuthProvider = ({ children }) => {
 // methods and context passed to rest of app
   const authData = {
     user,
+    setUser,
     login,
     logout,
   };
