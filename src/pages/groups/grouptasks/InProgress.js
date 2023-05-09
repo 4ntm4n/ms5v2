@@ -7,19 +7,18 @@ import AddTaskModal from "../../../components/AddTaskModal";
 
 function InProgress() {
   const { id } = useParams();
-  const [activeTasks, setactiveTasks] = useState([]);
+  const [activeTasks, setActiveTasks] = useState([]);
   const [tasksChanged, setTasksChanged] = useState(false);
   
   const updateTasks = () => {
     setTasksChanged((prevTasksChanged) => !prevTasksChanged);
   };
 
-
   const fetchTasks = async () => {
     try {
-      const { data } = await api.get(`/tasks/?owning_group__id=${id}`);
-      console.log(data.results);
-      setactiveTasks(data.results);
+      const { data } = await api.get(`/tasks/?owning_group__id=${id}&in_progress=true`);
+      //console.log(data.results);
+      setActiveTasks(data.results);
     } catch (error) {
       console.log(error);
     }
@@ -31,14 +30,14 @@ function InProgress() {
 
   return (
     <>
-    {activeTasks.length
-      ? activeTasks.map((task) => <Task key={task.id} taskInfo={task} />)
-      : "there are no unitiated tasks"}
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 "></div>
-    <div className="container mx-auto"></div>
+      {activeTasks.length
+        ? activeTasks.map((task) => <Task key={task.id} taskInfo={task}  updateTasks={updateTasks} />)
+        : "There are no current tasks in progress, take ownership of an unassigned task to view them here"}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 "></div>
+      <div className="container mx-auto"></div>
 
-    <AddTaskModal groupId={id} updateTasks={updateTasks}/>
-  </>
+      <AddTaskModal groupId={id} updateTasks={updateTasks}/>
+    </>
   );
 }
 export default InProgress;
