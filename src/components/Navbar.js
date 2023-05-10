@@ -1,30 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import UserOptions from "./UserOptions";
 import UserOptionsModal from "./UserOptionsModal";
 
 function Navbar({ children }) {
-  const { user, logout } = useAuth();
+  const { user, setUser, logout} = useAuth();
   const [login, setLogin] = useState(false);
 
+  useEffect(() => {
+    user ? setLogin(true) : setLogin(false);
+  }, [user]);
+
   const handleLogout = () => {
-        setLogin(false);
-        logout();
+    logout();
   };
 
-  useEffect(() => {
-    user && setLogin(true);
-    //console.log(user);
-  }, [user, login]);
-
   const authNav = (
-    <> 
-      <li>  </li>
+    <>
+      <li></li>
       <li>
-        <NavLink to="/groups">Groups</NavLink> 
-      </li><li>
-        <NavLink to="/tasks">Tasks</NavLink> 
+        <NavLink to="/groups">Groups</NavLink>
+      </li>
+      <li>
+        <NavLink to="/tasks">Tasks</NavLink>
       </li>
       <li>
         <a onClick={handleLogout}>Log out</a>
@@ -41,6 +40,7 @@ function Navbar({ children }) {
       </li>
     </>
   );
+
 
   return (
     <div className="drawer">

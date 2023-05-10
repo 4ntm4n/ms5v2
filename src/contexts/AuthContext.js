@@ -82,9 +82,11 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (tokens && !user) {
       setUser(extractUser(tokens));
+    } else if (!tokens) {
+      setUser(null);
     }
     setLoading(false);
-  }, [tokens, loading, user]);
+  }, [tokens, loading]);
 
 
  
@@ -92,7 +94,6 @@ export const AuthProvider = ({ children }) => {
   const authData = {
     user,
     setUser,
-  
     login,
     logout,
   };
