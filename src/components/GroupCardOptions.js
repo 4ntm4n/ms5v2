@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import api from "../api/AxiosInterceptors";
@@ -7,7 +7,7 @@ import UpdateGroupModal from "./UpdateGroupModal";
 function GroupCardOptions({groupInfo, refreshGroupsList}) {
 
     const {id, name, description} = groupInfo;
-    
+    const [errors, setErrors] = useState({});
 
     const handleDelete = async () => {
         try {
@@ -28,8 +28,11 @@ function GroupCardOptions({groupInfo, refreshGroupsList}) {
         try {
            await api.put(`groups/${id}/`, updateInfo);
            refreshGroupsList();
+           setErrors({});
         } catch (error) {
-            console.log(error);
+          if (error.response.data) {
+            setErrors(error.response.data);
+          }
         }
       };
 
@@ -53,7 +56,7 @@ function GroupCardOptions({groupInfo, refreshGroupsList}) {
         </li>
       </ul>
     </div>
-    <UpdateGroupModal groupInfo={groupInfo} handleUpdate={handleUpdate}/>
+    <UpdateGroupModal groupInfo={groupInfo} handleUpdate={handleUpdate} errors={errors}/>
     </>
   );
 }

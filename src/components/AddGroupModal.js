@@ -67,7 +67,7 @@ function AddGroupModal({ refreshGroupsList }) {
             {errors.name &&
               errors.name.map((error, index) => (
                 <>
-                  <div className="alert alert-warning shadow-lg">
+                  <div key={index} className="alert alert-warning shadow-lg">
                     <div>
                       <span className=" bg-transparent">{error}.</span>
                     </div>

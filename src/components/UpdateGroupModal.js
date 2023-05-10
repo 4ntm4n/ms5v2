@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 
-function UpdateGroupModal({ groupInfo, handleUpdate }) {
+function UpdateGroupModal({ groupInfo, handleUpdate, errors }) {
   const { name, description } = groupInfo;
   const [input, setInput] = useState({
     name,
@@ -19,13 +19,17 @@ function UpdateGroupModal({ groupInfo, handleUpdate }) {
       ...prevInfo,
       [name]: value,
     }));
-    
   };
 
   return (
     <>
       {/* Put this part before </body> tag */}
-      <input type="checkbox" id="edit-group-modal" className="modal-toggle" ref={modalCheckRef} />
+      <input
+        type="checkbox"
+        id="edit-group-modal"
+        className="modal-toggle"
+        ref={modalCheckRef}
+      />
       <div className="modal modal-bottom sm:modal-middle">
         <form className="modal-box" onSubmit={handleUpdate}>
           <h3 className="font-bold text-lg mb-3"></h3>
@@ -40,6 +44,18 @@ function UpdateGroupModal({ groupInfo, handleUpdate }) {
               placeholder="add a name here"
               className="input input-bordered"
             />
+
+            {errors.name &&
+              errors.name.map((error, index) => (
+                <>
+                  <div key={index} className="alert alert-warning shadow-lg">
+                    <div>
+                      <span className=" bg-transparent">{error}.</span>
+                    </div>
+                  </div>
+                </>
+              ))}
+              
           </label>
 
           <label className="input-group input-group-vertical mb-7">
@@ -52,19 +68,16 @@ function UpdateGroupModal({ groupInfo, handleUpdate }) {
             ></textarea>
           </label>
 
-          <div className="modal-action"> 
+          <div className="modal-action">
+            <button
+              htmlFor="edit-group-modal"
+              className="btn btn-primary"
+              type="submit"
+            >
+              Update Group info
+            </button>
             <label htmlFor="edit-group-modal">
-              <a className="btn btn-outline">cancel</a>
-            </label>
-            <label>
-              <button
-                htmlFor="edit-group-modal"
-                className="btn btn-primary"
-                type="submit"
-                onClick={modalToggle}
-              >
-                Update Group info
-              </button>
+              <a className="btn btn-outline">exit</a>
             </label>
           </div>
         </form>
