@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import api from "../../api/AxiosInterceptors";
 import GroupCard from "../../components/GroupCard";
 import AddGroupModal from "../../components/AddGroupModal";
+import { useAuth } from "../../contexts/AuthContext";
 
 function ListGroupsPage() {
+  const {user} = useAuth();
   const [groups, setGroups] = useState([]);
   const [updateGroups, setUpdateGroups] = useState(false);
 
@@ -24,7 +26,7 @@ function ListGroupsPage() {
   //  init fetch groups with useEffect on group change
   useEffect(() => {
     fetchGroups();
-  }, [updateGroups]);
+  }, [updateGroups, user]);
   return (
     <>
       <AddGroupModal refreshGroupsList={refreshGroupsList} />
