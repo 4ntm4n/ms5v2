@@ -1,5 +1,7 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
+
 const { createContext, useContext, useState, useEffect } = require("react");
 
 // create an auth context
@@ -10,6 +12,7 @@ export const useAuth = () => useContext(AuthContext);
 
 //create auth provider
 export const AuthProvider = ({ children }) => {
+  const navigate = useNavigate();
   const [tokens, setTokens] = useState(() =>
     localStorage.getItem("tokens")
       ? JSON.parse(localStorage.getItem("tokens"))
@@ -21,6 +24,8 @@ export const AuthProvider = ({ children }) => {
       : null;
   });
   const [loading, setLoading] = useState(true);
+
+  const [errors, setErrors] = useState({});
 
   //set user, based on decrypted authtoken
   const extractUser = (token) => {
@@ -45,38 +50,33 @@ export const AuthProvider = ({ children }) => {
 
     try {
       // fetch a token using the username and password of an existing user
-      const response = await fetch("http://localhost:8000/api/token/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: e.target.username.value,
-          password: e.target.password.value,
-        }),
+      const response = await axios.post("http://localhost:8000/api/token/", {
+        username: e.target.username.value,
+        password: e.target.password.value,
       });
-
-      //store json response
-
-      const data = await response.json();
-      /* console.log("access token :", JSON.stringify(data.access));
-        console.log("refresh token :", JSON.stringify(data.refresh)); */
-
+    
+      const data = response.data;
+    
       if (response.status === 200) {
-        //sets tokens in local Storage
-        //console.log("setting tokens in localStorage");
+        // sets tokens in local Storage
         localStorage.setItem("tokens", JSON.stringify(data));
         setTokens(data);
-        /* setUser(data.access); */
       }
     } catch (error) {
-      console.log(error);
+      if (error.response) {
+        setErrors(error.response.data.errors);
+      } else {
+        console.log(error);
+      }
     }
   };
+
+
   //logout function
   const logout = () => {
     localStorage.removeItem("tokens");
     setUser(null);
+    navigate("/");
   };
 
   useEffect(() => {
