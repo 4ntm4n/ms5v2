@@ -12,9 +12,14 @@ function UserOptionsModal() {
  
   const modalCheckRef = useRef(null);
 
-  const modalToggle = () => {
-    modalCheckRef.current.checked = !modalCheckRef.current.checked;
+  const modalToggle = (e) => {
+    if (Object.keys(errors).length > 0) {
+      e.preventDefault();
+    } else {
+      modalCheckRef.current.checked = !modalCheckRef.current.checked;
+    }
   };
+
 
   const triggerImgChoice = () => {
     if (imgInputRef.current) {
@@ -48,8 +53,6 @@ function UserOptionsModal() {
   
     try {
         const { data } = await api.patch(`/profiles/${user.userId}/`, formData);
-       
-       console.log(data1);
 
        setUser({ownerId: data.id, username: data.owner, image: data.image,});
        localStorage.setItem("user", JSON.stringify({ownerId: data.id, username: data.owner, image: data.image,}));
@@ -71,6 +74,7 @@ function UserOptionsModal() {
         
       <div className="modal modal-bottom sm:modal-middle">
         <form className="modal-box" onSubmit={handleUpload}>
+
             <div className="flex flex-col place-items-center gap-4" >
           <input
             type="file"

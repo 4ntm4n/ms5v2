@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UpdateTaskModal from "./UpdateTaskModal";
@@ -6,8 +6,7 @@ import api from "../api/AxiosInterceptors";
 
 function TaskOptions({ taskInfo, updateTasks }) {
   const { id, in_progress, completed, owner } = taskInfo;
-
-
+  const [errors, setErrors] = useState({});
 
   const handleDelete = async () => {
     try {
@@ -28,8 +27,11 @@ function TaskOptions({ taskInfo, updateTasks }) {
     try {
       await api.patch(`tasks/${id}/`, updateInfo);
       updateTasks();
+      setErrors({});
     } catch (error) {
-      console.log(error);
+      if (error.response.data) {
+        setErrors(error.response.data);
+      }
     }
   };
 
@@ -64,7 +66,6 @@ function TaskOptions({ taskInfo, updateTasks }) {
     }
   };
 
-
   return (
     <>
       <div className="dropdown dropdown-left ">
@@ -92,7 +93,7 @@ function TaskOptions({ taskInfo, updateTasks }) {
               </a>
             )}
           </li>
-          
+
           {completed ? (
             <li>
               <a className="text-error" onClick={handleRelease}>
@@ -104,7 +105,6 @@ function TaskOptions({ taskInfo, updateTasks }) {
               <label htmlFor={`edit-task-modal${id}`}>Edit task info</label>
             </li>
           )}
-
 
           {in_progress && !completed && (
             <li>
@@ -121,7 +121,12 @@ function TaskOptions({ taskInfo, updateTasks }) {
           </li>
         </ul>
       </div>
-      <UpdateTaskModal taskInfo={taskInfo} handleUpdate={handleUpdate} />
+      <UpdateTaskModal
+        taskInfo={taskInfo}
+        handleUpdate={handleUpdate}
+        errors={errors}
+        setErrors={setErrors}
+      />
     </>
   );
 }
