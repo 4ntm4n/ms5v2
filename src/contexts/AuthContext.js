@@ -1,3 +1,4 @@
+import axios from "axios";
 import jwtDecode from "jwt-decode";
 const { createContext, useContext, useState, useEffect } = require("react");
 
@@ -29,6 +30,8 @@ export const AuthProvider = ({ children }) => {
       username: decUser.username,
       image: decUser.profile_image,
     }));
+
+    
     
     return {
       userId: decUser.user_id,
@@ -77,16 +80,19 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (tokens) {
+    if (tokens && !user) {
       setUser(extractUser(tokens));
     }
     setLoading(false);
-  }, [tokens, loading]);
+  }, [tokens, loading, user]);
 
+
+ 
   // methods and context passed to rest of app
   const authData = {
     user,
     setUser,
+  
     login,
     logout,
   };

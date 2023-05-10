@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import api from "../api/AxiosInterceptors";
 
 function UserOptionsModal() {
-  const {user, setUser} = useAuth();
+  const {user, setUser, refreshTokens} = useAuth();
   const imgInputRef = useRef(null);
   const [profileImg, setProfileImg] = useState({
     img: null,
@@ -48,15 +48,16 @@ function UserOptionsModal() {
   
     try {
         const { data } = await api.patch(`/profiles/${user.userId}/`, formData);
-        const updatedProfile = data;
+       
+       console.log(data1);
 
-        setUser((prevUser) => ({
-            ...prevUser,
-            image: updatedProfile.image
-        }));
-    } catch (error) {
+       setUser({ownerId: data.id, username: data.owner, image: data.image,});
+       localStorage.setItem("user", JSON.stringify({ownerId: data.id, username: data.owner, image: data.image,}));
+        
+
+      } catch (error) {
         console.log(error);
-    }
+      }
   };
 
   return (
