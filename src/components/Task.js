@@ -26,7 +26,6 @@ function Task({ taskInfo, updateTasks }) {
     setIsCollapsed(!isCollapsed);
   };
 
-  console.log(taskInfo);
   return (
     <>
       <div className="w-[90%] mx-auto shadow-xl rounded-lg">
