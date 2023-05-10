@@ -25,8 +25,6 @@ export const AuthProvider = ({ children }) => {
   });
   const [loading, setLoading] = useState(true);
 
-  const [errors, setErrors] = useState({});
-
   //set user, based on decrypted authtoken
   const extractUser = (token) => {
     const decUser = jwtDecode(token.access);
@@ -45,31 +43,7 @@ export const AuthProvider = ({ children }) => {
     };
   };
 
-  const login = async (e) => {
-    e.preventDefault();
-
-    try {
-      // fetch a token using the username and password of an existing user
-      const response = await axios.post("http://localhost:8000/api/token/", {
-        username: e.target.username.value,
-        password: e.target.password.value,
-      });
-    
-      const data = response.data;
-    
-      if (response.status === 200) {
-        // sets tokens in local Storage
-        localStorage.setItem("tokens", JSON.stringify(data));
-        setTokens(data);
-      }
-    } catch (error) {
-      if (error.response) {
-        setErrors(error.response.data.errors);
-      } else {
-        console.log(error);
-      }
-    }
-  };
+  
 
 
   //logout function
@@ -93,8 +67,9 @@ export const AuthProvider = ({ children }) => {
   // methods and context passed to rest of app
   const authData = {
     user,
+    tokens,
+    setTokens,
     setUser,
-    login,
     logout,
   };
 

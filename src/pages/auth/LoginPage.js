@@ -1,8 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import axios from "axios";
 
 function LoginPage() {
-  const { login } = useAuth();
+  const { user, setUser, setTokens } = useAuth();
+  const [errors, setErrors] = useState({});
+
+  const login = async (e) => {
+    e.preventDefault();
+
+    try {
+      setErrors({});
+      // fetch a token using the username and password of an existing user
+      const response = await axios.post("http://localhost:8000/api/token/", {
+        username: e.target.username.value,
+        password: e.target.password.value,
+      });
+
+      const data = response.data;
+
+      if (response.status === 200) {
+        // sets tokens in local Storage
+        localStorage.setItem("tokens", JSON.stringify(data));
+        setTokens(data);
+      }
+
+      
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 401) {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            non_field_errors: ["Incorrect username or password."],
+          }));
+        } else if (error.response.data) {
+          setErrors(error.response.data);
+        }
+      } else {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -16,6 +55,14 @@ function LoginPage() {
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <form onSubmit={login} className="card-body">
+          {errors &&
+                errors.non_field_errors?.map((error, index) => (
+                  <div key={index} className="alert alert-warning shadow-lg">
+                    <div>
+                      <span className="bg-transparent">{error}.</span>
+                    </div>
+                  </div>
+                ))}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Username</span>
@@ -27,6 +74,16 @@ function LoginPage() {
                 autoComplete="username"
                 className="input input-bordered"
               />
+              {errors &&
+                errors.username?.map((error, index) => (
+                  <div key={index} className="alert alert-warning shadow-lg">
+                    <div>
+                      <span className="bg-transparent">{error}.</span>
+                    </div>
+                  </div>
+                ))}
+              
+              
             </div>
             <div className="form-control">
               <label className="label">
@@ -39,6 +96,15 @@ function LoginPage() {
                 autoComplete="current-password"
                 className="input input-bordered"
               />
+              
+              {errors &&
+                errors.password?.map((error, index) => (
+                  <div key={index} className="alert alert-warning shadow-lg">
+                    <div>
+                      <span className="bg-transparent">{error}.</span>
+                    </div>
+                  </div>
+                ))}
               <label className="label">
                 <a href="#" className="label-text-alt link link-hover">
                   Forgot password?

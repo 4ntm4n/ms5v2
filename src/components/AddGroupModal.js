@@ -78,12 +78,12 @@ function AddGroupModal({ refreshGroupsList }) {
 
           <label className="input-group input-group-vertical mb-7">
             <span>Description</span>
-            <textArea
+            <textarea
               ref={descriptionRef}
               className="resize-none textarea textarea-bordered h-24"
               name="description"
               placeholder="give your task some extra content (optional)"
-            ></textArea>
+            ></textarea>
           </label>
 
           <div className="modal-action">
