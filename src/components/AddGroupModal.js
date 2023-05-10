@@ -31,7 +31,7 @@ function AddGroupModal({ refreshGroupsList }) {
       setErrors({});
     } catch (error) {
       console.error("Error creating task:", error);
-      if (error.response && error.response.data) {
+      if (error.response.data) {
         setErrors(error.response.data);
       }
     } finally {
