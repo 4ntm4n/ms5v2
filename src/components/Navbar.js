@@ -66,7 +66,7 @@ function Navbar({ children }) {
             </label>
           </div>
           <div className="flex-1 px-2 mx-2">GroupTask</div>
-          <div className="flex-2 px-2 mx-2">{user &&  <label htmlFor="my-modal-6" className="cursor-pointer"  > <UserOptions /> </label> }</div>
+          <div className="flex-2 px-2 mx-2">{user &&  <label htmlFor="my-modal-6" className="cursor-pointer"  > <UserOptions user={user} /> </label> }</div>
           
           <div className="flex-none hidden lg:block">
           

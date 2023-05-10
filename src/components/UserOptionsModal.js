@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import api from "../api/AxiosInterceptors";
 
 function UserOptionsModal() {
-  const {user} = useAuth();
+  const {user, setUser} = useAuth();
   const imgInputRef = useRef(null);
   const [profileImg, setProfileImg] = useState({
     img: null,
@@ -47,7 +47,13 @@ function UserOptionsModal() {
     formData.append("image", profileImg.img);
   
     try {
-        await api.patch(`/profiles/${user.userId}/`, formData);
+        const { data } = await api.patch(`/profiles/${user.userId}/`, formData);
+        const updatedProfile = data;
+
+        setUser((prevUser) => ({
+            ...prevUser,
+            image: updatedProfile.image
+        }));
     } catch (error) {
         console.log(error);
     }
