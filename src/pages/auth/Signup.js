@@ -1,8 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { unAuthRequest } from "../../api/AxiosInterceptors";
 
 function Signup() {
+const [errors, setErrors] = useState({});
+const navigate = useNavigate();
 
 const handleSignup = async (e) => {
   e.preventDefault();
@@ -13,10 +15,13 @@ const handleSignup = async (e) => {
   };
 
   try {
-    const response = await unAuthRequest.post("/dj-rest-auth/registration/", newUser);
-    console.log(response.data);
+    setErrors({});
+    await unAuthRequest.post("/dj-rest-auth/registration/", newUser);
+    navigate("/login");
   } catch (error) {
-    console.log(error.response.data);
+    if (error.response.data){
+      setErrors(error.response.data);
+    }
   }
 };
   return (
@@ -30,6 +35,7 @@ const handleSignup = async (e) => {
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <form onSubmit={handleSignup} className="card-body">
+         
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Username</span>
@@ -40,6 +46,14 @@ const handleSignup = async (e) => {
                 placeholder="choose a username"
                 className="input input-bordered"
               />
+               {errors &&
+                errors.username?.map((error, index) => (
+                  <div key={index} className="alert alert-warning shadow-lg">
+                    <div>
+                      <span className="bg-transparent">{error}.</span>
+                    </div>
+                  </div>
+                ))}
             </div>
             <div className="form-control">
               <label className="label">
@@ -51,6 +65,14 @@ const handleSignup = async (e) => {
                 placeholder="choose a password"
                 className="input input-bordered"
               />
+               {errors &&
+                errors.password1?.map((error, index) => (
+                  <div key={index} className="alert alert-warning shadow-lg">
+                    <div>
+                      <span className="bg-transparent">{error}.</span>
+                    </div>
+                  </div>
+                ))}
             </div>
             <div className="form-control">
               <label className="label">
@@ -62,6 +84,22 @@ const handleSignup = async (e) => {
                 placeholder="Repeat Password"
                 className="input input-bordered"
               />
+               {errors &&
+                errors.password2?.map((error, index) => (
+                  <div key={index} className="alert alert-warning shadow-lg">
+                    <div>
+                      <span className="bg-transparent">{error}.</span>
+                    </div>
+                  </div>
+                ))}
+                 {errors &&
+                errors.non_field_errors?.map((error, index) => (
+                  <div key={index} className="alert alert-warning shadow-lg">
+                    <div>
+                      <span className="bg-transparent">{error}.</span>
+                    </div>
+                  </div>
+                ))}
               <label className="label">
                 <Link to="/login" className="label-text-alt link link-hover">
                   already a member?
