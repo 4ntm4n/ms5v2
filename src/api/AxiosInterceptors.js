@@ -31,6 +31,10 @@ const api = axios.create({
   headers: { Authorization: `Bearer ${getTokens()?.access}` },
 });
 
+export const unAuthRequest = axios.create({
+  baseURL
+});
+
 /*
  *
  * if multiple requests at the same time, the first request to rech here

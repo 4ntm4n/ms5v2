@@ -1,9 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { unAuthRequest } from "../../api/AxiosInterceptors";
 
 function Signup() {
 
-  
+const handleSignup = async (e) => {
+  e.preventDefault();
+  const newUser = {
+    username: e.target.username.value,
+    password1: e.target.password1.value,
+    password2: e.target.password2.value,
+  };
+
+  try {
+    const response = await unAuthRequest.post("/dj-rest-auth/registration/", newUser);
+    console.log(response.data);
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -14,7 +29,7 @@ function Signup() {
           </p>
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <form className="card-body">
+          <form onSubmit={handleSignup} className="card-body">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Username</span>
@@ -31,7 +46,7 @@ function Signup() {
                 <span className="label-text">Password</span>
               </label>
               <input
-                type="text"
+                type="password"
                 name="password1"
                 placeholder="choose a password"
                 className="input input-bordered"
@@ -42,7 +57,7 @@ function Signup() {
                 <span className="label-text">Repeat Password</span>
               </label>
               <input
-                type="text"
+                type="password"
                 name="password2"
                 placeholder="Repeat Password"
                 className="input input-bordered"
