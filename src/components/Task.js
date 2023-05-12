@@ -61,7 +61,7 @@ function Task({ taskInfo, updateTasks }) {
             <p className=" w-[80%]">
               {description.length ? description : "no description added."}
             </p>
-            <div className=" h-10 w-full mt-4 flex gap-5 items-center text-xs justify-center">
+            <div className=" h-10 w-full mt-4 flex gap-5 items-center text-xs justify-center truncate">
               <span className=" badge-ghost opacity-50 rounded-full px-2">
                 {" "}
                 group name: {`${group_name}`}{" "}
