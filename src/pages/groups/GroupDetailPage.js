@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import BottomNav from "../../components/BottomNav";
 import api from "../../api/AxiosInterceptors";
 import GroupMembers from "../../components/GroupMembers";
@@ -13,7 +13,7 @@ function GroupDetailPage() {
   const [group, setGroup] = useState();
   const [addMember, setAddMember] = useState(false);
   const [membersChanged, setMembersChanged] = useState(false);
-  
+  const navigate = useNavigate();
   const updateMembers = () => {
     setMembersChanged((prevMembersChanged) => !prevMembersChanged);
   };
@@ -35,7 +35,12 @@ function GroupDetailPage() {
       const { data } = await api.get(`/groups/${id}/`);
       setGroup(data);
     } catch (error) {
+      if (error.response && error.response.status === 404) {
+        navigate('/404');
+    }else{
       console.log(error);
+    }
+      
     }
   };
 
