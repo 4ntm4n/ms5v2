@@ -12,6 +12,7 @@ import GroupDetailPage from "./pages/groups/GroupDetailPage";
 import UnAssigned from "./pages/groups/grouptasks/UnAssigned";
 import Completed from "./pages/groups/grouptasks/Completed";
 import InProgress from "./pages/groups/grouptasks/InProgress";
+import Page404 from "./pages/errorPages/Page404";
 
 
 function App() {
@@ -19,9 +20,10 @@ function App() {
     <>
       <Navbar>
         <Routes>
-          {/* unprotected routes */}
+          {/* routes for all */}
           <Route path="/" element={<HomePage />} />
-          
+          <Route path="/404" element={<Page404 />} />
+            {/* unprotected routes */}
           <Route element={<PublicRoutes />}>
             <Route path="/login" element={<LoginPage />}/>
             <Route path="/signup" element={<Signup />} />
@@ -39,6 +41,8 @@ function App() {
             </Route>
             <Route path="/tasks" element={<TaskPage /> } />
           </Route>
+          {/* dynamic 404 redirect */}
+          <Route path="/*" element={<Page404 />} />
         </Routes>
       </Navbar>
     </>

@@ -5,9 +5,12 @@ import api from "../../api/AxiosInterceptors";
 import GroupMembers from "../../components/GroupMembers";
 import AddGroupMembers from "../../components/AddGroupMembers";
 import GroupTabs from "../../components/GroupTabs";
+import { useAuth } from "../../contexts/AuthContext";
 
 
 function GroupDetailPage() {
+  const {user} = useAuth();
+  const [groupOwner, setGroupOwner] = useState(false);
   const { id } = useParams();
   const drawerRef = useRef();
   const [group, setGroup] = useState();
@@ -17,6 +20,7 @@ function GroupDetailPage() {
   const updateMembers = () => {
     setMembersChanged((prevMembersChanged) => !prevMembersChanged);
   };
+
 
   const handleDrawerToggle = () => {
     drawerRef.current.checked = !drawerRef.current.checked;
@@ -36,7 +40,7 @@ function GroupDetailPage() {
       setGroup(data);
     } catch (error) {
       if (error.response && error.response.status === 404) {
-        navigate('/404');
+        navigate('/404', {replace:true});
     }else{
       console.log(error);
     }
@@ -47,6 +51,10 @@ function GroupDetailPage() {
   useEffect(() => {
     fetchGroup();
   }, [membersChanged]);
+
+  useEffect(() => {
+    group && setGroupOwner(group.group_owner.id === user.userId);
+  }, [group]);
 
   return (
     <>
@@ -70,28 +78,52 @@ function GroupDetailPage() {
         <label htmlFor="my-drawer" className="drawer-overlay"></label>
         <div className="menu p-4 w-80 bg-base-100 text-base-content">
           {/* Sidebar content here */}
-          <div className="btn-group flex justify-center">
-            <button onClick={showMembers} className="btn px-8 btn-active">
-              members
-            </button>
-            <button onClick={showAddMember} className="btn">
-              add members
-            </button>
-          </div>
-          <div className="divider"></div>
-          <div>
-            {addMember ? (
-              <AddGroupMembers
-                groupId={id}
-                groupOwner={group.group_owner.owner}
-                members={group.members}
-                updateMembers={updateMembers}
-              />
-            ) : (
-              group && <GroupMembers members={group.members} />
-            )}
+          {groupOwner ?
+            (<>
+              <div className="btn-group flex justify-center">
+              <button onClick={showMembers} className="btn px-8 btn-active">
+                members
+              </button>
+              <button onClick={showAddMember} className="btn">
+                add members
+              </button>
+            </div>
             <div className="divider"></div>
-          </div>
+            <div>
+              {addMember ? (
+                <AddGroupMembers
+                  groupId={id}
+                  groupOwner={group.group_owner.owner}
+                  members={group.members}
+                  updateMembers={updateMembers}
+                />
+              ) : (
+                group && <GroupMembers members={group.members} />
+              )}
+              <div className="divider"></div>
+            </div>
+            </>) : (
+              <>
+              <div className="btn-group flex justify-center">
+            </div>
+            <div className="divider"></div>
+            <div>
+              {addMember ? (
+                <AddGroupMembers
+                  groupId={id}
+                  groupOwner={group.group_owner.owner}
+                  members={group.members}
+                  updateMembers={updateMembers}
+                />
+              ) : (
+                group && <GroupMembers members={group.members} />
+              )}
+              <div className="divider"></div>
+            </div>
+            </>
+            )
+          
+          }
         </div>
       </div>
     </div></>
