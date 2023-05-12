@@ -88,7 +88,7 @@ function GroupDetailPage() {
                     onClick={showAddMember}
                     className={`btn ${addMember && "btn-active"}`}
                   >
-                    add members
+                    edit members
                   </button>
                 </div>
                 <div className="divider"></div>
