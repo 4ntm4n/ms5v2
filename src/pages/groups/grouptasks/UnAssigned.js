@@ -29,11 +29,15 @@ function UnAssigned() {
 
   return (
     <>
-      {unasTasks.length
+     
+
+      <div className="grid grid-cols-1">
+        <div className="container mx-auto max-w-xl">
+        {unasTasks.length
         ? unasTasks.map((task) => <Task key={task.id} taskInfo={task}  updateTasks={updateTasks} />)
         : "there are no unitiated tasks"}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 "></div>
-      <div className="container mx-auto"></div>
+        </div>
+      </div>
 
       <AddTaskModal groupId={id} updateTasks={updateTasks}/>
     </>

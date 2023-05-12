@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import GroupCardOptions from "./GroupCardOptions";
+import { useAuth } from "../contexts/AuthContext";
 
 function GroupCard({ group, refreshGroupsList }) {
   const { id, name, description, group_owner, members } = group;
-
+  const { user } = useAuth();
   const groupSize = members.length;
+
+  const owningUser = user.userId === group_owner.id;
 
   return (
     <div className="card w-96 bg-base-100 shadow-xl mt-20">
@@ -16,7 +19,7 @@ function GroupCard({ group, refreshGroupsList }) {
         </div>
       </div>
       <div className="flex justify-end">
-        <GroupCardOptions refreshGroupsList={refreshGroupsList} groupInfo={{id, name, description}}/>
+       { owningUser &&  <GroupCardOptions refreshGroupsList={refreshGroupsList} groupInfo={{id, name, description}}/>}
       </div>
       <div className="card-body mt-20">
         <h2 className="card-title">{group.name}</h2>

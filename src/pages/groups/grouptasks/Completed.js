@@ -30,11 +30,13 @@ function Completed() {
 
   return (
     <>
-      {completedTasks.length
+      <div className="grid grid-cols-1">
+        <div className="container mx-auto max-w-xl">
+        {completedTasks.length
         ? completedTasks.map((task) => <Task key={task.id} taskInfo={task}  updateTasks={updateTasks} />)
         : "There are completed tasks for this group. you can complete a task that you own from the 'active' tab."}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 "></div>
-      <div className="container mx-auto"></div>
+        </div>
+      </div>
 
       <AddTaskModal groupId={id} updateTasks={updateTasks}/>
     </>
