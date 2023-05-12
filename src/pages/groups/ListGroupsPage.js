@@ -5,14 +5,13 @@ import AddGroupModal from "../../components/AddGroupModal";
 import { useAuth } from "../../contexts/AuthContext";
 
 function ListGroupsPage() {
-  const {user} = useAuth();
+  const { user } = useAuth();
   const [groups, setGroups] = useState([]);
   const [updateGroups, setUpdateGroups] = useState(false);
 
   const refreshGroupsList = () => {
     setUpdateGroups(!updateGroups);
   };
-
 
   // fetch groups from the db
   const fetchGroups = async () => {
@@ -31,24 +30,26 @@ function ListGroupsPage() {
     <>
       <AddGroupModal refreshGroupsList={refreshGroupsList} />
 
-    <div className="bg-base-200 min-h-full">
-    {groups.length ? (
-      <div className="container mx-auto">
-        <ul className="flex flex-col lg:flex-row flex-wrap justify-center gap-1">
-          {groups.map((group) => (
-            <div key={group.id} className="grid place-items-center">
-              <GroupCard key={group.id} group={group} refreshGroupsList={refreshGroupsList} />
-            </div>
-          ))}
-        </ul>
-      
+      <div className="bg-base-200">
+        {groups.length ? (
+          <div className="container mx-auto mb-11">
+            <ul className="flex flex-col gap-x-6 sm:flex-col md:flex-row flex-wrap justify-center gap-1">
+              {groups.map((group) => (
+                <li key={group.id} className="grid place-items-center">
+                  <GroupCard
+                    key={group.id}
+                    group={group}
+                    refreshGroupsList={refreshGroupsList}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <p>no groups yet...</p>
+        )}
       </div>
-    ) : (
-      <p>no groups yet...</p>
-    )}
-  </div>
-
-  </>
+    </>
   );
 }
 
