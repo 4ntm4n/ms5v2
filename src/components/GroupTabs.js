@@ -24,6 +24,7 @@ function GroupTabs() {
     <nav className="flex justify-center bg-primary-500 py-2 mt-2">
       <NavLink
         to=""
+        replace
         className={`tab tab-lg tab-bordered mx-2 ${
           activeTab === "" ? "tab-active" : ""
         }`}
@@ -33,6 +34,7 @@ function GroupTabs() {
       </NavLink>
       <NavLink
         to="active"
+        replace
         className={`tab tab-lg tab-bordered mx-2 ${
           activeTab === "active" ? "tab-active" : ""
         }`}
@@ -42,6 +44,7 @@ function GroupTabs() {
       </NavLink>
       <NavLink
         to="completed"
+        replace
         className={`tab tab-lg tab-bordered mx-2 ${
           activeTab === "completed" ? "tab-active" : ""
         }`}
