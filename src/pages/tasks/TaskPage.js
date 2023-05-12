@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../../api/AxiosInterceptors";
 import Task from "../../components/Task";
 import { useAuth } from "../../contexts/AuthContext";
+import NoTasks from "../errorPages/NoTasks";
 
 function TaskPage() {
   const {user} = useAuth();
@@ -40,7 +41,7 @@ function TaskPage() {
       </div>
 
     </>
-  ) : ("no tasks");
+  ) : (<NoTasks></NoTasks>);
 }
 
 export default TaskPage;

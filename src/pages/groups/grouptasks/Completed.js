@@ -34,7 +34,7 @@ function Completed() {
         <div className="container mx-auto max-w-xl">
         {completedTasks.length
         ? completedTasks.map((task) => <Task key={task.id} taskInfo={task}  updateTasks={updateTasks} />)
-        : "There are completed tasks for this group. you can complete a task that you own from the 'active' tab."}
+        : <p className="text-center">There are completed tasks for this group. you can complete a task that you own from the active tab</p>}
         </div>
       </div>
 

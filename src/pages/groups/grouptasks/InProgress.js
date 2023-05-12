@@ -37,7 +37,7 @@ function InProgress() {
             ? activeTasks.map((task) => (
                 <Task key={task.id} taskInfo={task} updateTasks={updateTasks} />
               ))
-            : "There are no current tasks in progress, take ownership of an unassigned task to view them here"}
+            : <p className="text-center">There are no current tasks in progress, take ownership of an unassigned task to view them here</p>}
         </div>
       </div>
 

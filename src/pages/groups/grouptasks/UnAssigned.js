@@ -35,7 +35,7 @@ function UnAssigned() {
         <div className="container mx-auto max-w-xl">
         {unasTasks.length
         ? unasTasks.map((task) => <Task key={task.id} taskInfo={task}  updateTasks={updateTasks} />)
-        : "there are no unitiated tasks"}
+        : <p className="text-center">there are currently no unitiated tasks for this group.</p>}
         </div>
       </div>
 
