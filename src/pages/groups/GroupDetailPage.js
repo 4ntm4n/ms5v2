@@ -55,7 +55,7 @@ function GroupDetailPage() {
     group && setUserIsOwner(user.userId === group.group_owner.id);
   }, [group]);
 
-  return (
+  return group ? (
     <>
       <div className="drawer">
         <input
@@ -66,7 +66,6 @@ function GroupDetailPage() {
         />
 
         <div className="drawer-content flex place-content-center">
-          {/* Page content here */}
           <div className="flex flex-col flex-1">
             <GroupTabs />
             <Outlet />
@@ -76,14 +75,19 @@ function GroupDetailPage() {
         <div className="drawer-side">
           <label htmlFor="my-drawer" className="drawer-overlay"></label>
           <div className="menu p-4 w-80 bg-base-100 text-base-content">
-            {/* Sidebar content here */}
             {userIsOwner ? (
               <>
                 <div className="btn-group flex justify-center">
-                  <button onClick={showMembers} className={`btn px-8 ${!addMember && "btn-active"} `}>
+                  <button
+                    onClick={showMembers}
+                    className={`btn px-8 ${!addMember && "btn-active"} `}
+                  >
                     members
                   </button>
-                  <button onClick={showAddMember}  className={`btn ${addMember && "btn-active"}`}>
+                  <button
+                    onClick={showAddMember}
+                    className={`btn ${addMember && "btn-active"}`}
+                  >
                     add members
                   </button>
                 </div>
@@ -97,32 +101,36 @@ function GroupDetailPage() {
                       updateMembers={updateMembers}
                     />
                   ) : (
-                    group && <GroupMembers members={group.members} />
+                   <GroupMembers members={group.members} />
                   )}
                   <div className="divider"></div>
                 </div>
-
-                <div className="divider">group info</div>
-                <GroupInfo group={group} />
               </>
             ) : (
-              group && 
-              <>
-              <div className="divider">members</div>
-                <div className="btn-group flex justify-center"></div>
-                
-                <div>
-                  <GroupMembers members={group.members} />
-                  <div className="divider"></div>
-                </div>
-                <div className="divider">group info</div>
-                <GroupInfo group={group} />
-              </>
+               (
+                <>
+                  <div className="divider">members</div>
+                  <div className="btn-group flex justify-center"></div>
+
+                  <div>
+                    <GroupMembers members={group.members} />
+                    <div className="divider"></div>
+                  </div>
+                </>
+              )
             )}
+
+            
+            <div className="mt-auto mb-5 h-[300px] overflow-auto">
+              <div className="divider mt-auto mb-3">group info</div>
+              <GroupInfo group={group} />
+            </div>
           </div>
         </div>
       </div>
     </>
+  ) : (
+    <div>Loading...</div>
   );
 }
 
