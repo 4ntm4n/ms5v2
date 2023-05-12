@@ -14,11 +14,14 @@ function Task({ taskInfo, updateTasks }) {
     description,
     owner,
     owner_profile_image,
+    group_name,
     owning_group,
     in_progress,
     completed,
     updated_at,
   } = taskInfo;
+
+  console.log(taskInfo);
 
   const owningUser = user.userId === owner ? true : false;
 
@@ -54,8 +57,20 @@ function Task({ taskInfo, updateTasks }) {
             isCollapsed ? "max-h-0" : "max-h-[350px]"
           }`}
         >
-          <div className="p-4 opacity-100">
-            <p>{description.length ? description : "no description added."}</p>
+          <div className="p-4 opacity-100 flex flex-col items-center">
+            <p className=" w-[80%]">
+              {description.length ? description : "no description added."}
+            </p>
+            <div className=" h-10 w-full mt-4 flex gap-5 items-center text-xs justify-center">
+              <span className=" badge-ghost opacity-50 rounded-full px-2">
+                {" "}
+                group name: {`${group_name}`}{" "}
+              </span>{" "}
+              <span className=" badge-ghost opacity-50 rounded-full px-2">
+                {" "}
+                {`group id:  ${owning_group}`}{" "}
+              </span>
+            </div>
           </div>
         </div>
       </div>
