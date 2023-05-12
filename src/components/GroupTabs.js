@@ -1,8 +1,20 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
 function GroupTabs() {
   const [activeTab, setActiveTab] = useState("");
+  const location = useLocation();
+
+  useEffect(() => {
+    const pathSegments = location.pathname.split("/");
+    const lastSegment = pathSegments.pop();
+
+    if (isNaN(lastSegment)) {
+      setActiveTab(lastSegment);
+    } else {
+      setActiveTab("");
+    }
+  }, [location]);
 
   const handleTabClick = (tabName) => {
     setActiveTab(tabName);

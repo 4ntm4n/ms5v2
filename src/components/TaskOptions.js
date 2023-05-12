@@ -3,10 +3,12 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UpdateTaskModal from "./UpdateTaskModal";
 import api from "../api/AxiosInterceptors";
+import { useNavigate } from "react-router-dom";
 
 function TaskOptions({ taskInfo, updateTasks }) {
-  const { id, in_progress, completed, owner } = taskInfo;
+  const { id, in_progress, completed, owner, owning_group} = taskInfo;
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleDelete = async () => {
     try {
@@ -39,6 +41,7 @@ function TaskOptions({ taskInfo, updateTasks }) {
     try {
       await api.patch(`tasks/${id}/`, { in_progress: true });
       updateTasks();
+      navigate(`/groups/${owning_group}/active`);
     } catch (error) {
       console.log(error);
     }
