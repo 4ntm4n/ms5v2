@@ -1,4 +1,3 @@
-import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
@@ -28,14 +27,15 @@ export const AuthProvider = ({ children }) => {
   //set user, based on decrypted authtoken
   const extractUser = (token) => {
     const decUser = jwtDecode(token.access);
-    localStorage.setItem("user", JSON.stringify({
-      userId: decUser.user_id,
-      username: decUser.username,
-      image: decUser.profile_image,
-    }));
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        userId: decUser.user_id,
+        username: decUser.username,
+        image: decUser.profile_image,
+      })
+    );
 
-    
-    
     return {
       userId: decUser.user_id,
       username: decUser.username,
@@ -43,32 +43,37 @@ export const AuthProvider = ({ children }) => {
     };
   };
 
-  
-
-
   //logout function
   const logout = () => {
+    localStorage.removeItem("profileImage");
     localStorage.removeItem("tokens");
+    localStorage.removeItem("user");
+    setTokens(null);
     setUser(null);
     navigate("/");
   };
 
   useEffect(() => {
-    if (tokens && !user) {
-      setUser(extractUser(tokens));
-    } else if (!tokens) {
-      setUser(null);
+    if (tokens) {
+      let updatedUser = extractUser(tokens);
+      const storedImage = localStorage.getItem("profileImage");
+
+      // If a profile image is stored in local storage, use it
+      if (storedImage) {
+        updatedUser = { ...updatedUser, image: storedImage };
+      }
+
+      setUser(updatedUser);
     }
     setLoading(false);
-  }, [tokens, loading]);
+  }, [tokens]);
 
-
- 
   // methods and context passed to rest of app
   const authData = {
     user,
     tokens,
     setTokens,
+    extractUser,
     setUser,
     logout,
   };

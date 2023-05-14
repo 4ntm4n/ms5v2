@@ -3,7 +3,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
 
 function LoginPage() {
-  const { user, setUser, setTokens } = useAuth();
+  const { user, setUser, setTokens, extractUser } = useAuth();
   const [errors, setErrors] = useState({});
 
   const login = async (e) => {
@@ -22,7 +22,10 @@ function LoginPage() {
       if (response.status === 200) {
         // sets tokens in local Storage
         localStorage.setItem("tokens", JSON.stringify(data));
+        localStorage.setItem("user", JSON.stringify(extractUser(data)));
+
         setTokens(data);
+        setUser(extractUser(data));
       }
 
       

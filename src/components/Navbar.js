@@ -5,12 +5,12 @@ import UserOptions from "./UserOptions";
 import UserOptionsModal from "./UserOptionsModal";
 
 function Navbar({ children }) {
-  const { user, setUser, logout} = useAuth();
+  const { loading, tokens, user, logout} = useAuth();
   const [login, setLogin] = useState(false);
 
   useEffect(() => {
-    user ? setLogin(true) : setLogin(false);
-  }, [user]);
+    tokens ? setLogin(true) : setLogin(false);
+  }, [tokens]);
 
   const handleLogout = () => {
     logout();
