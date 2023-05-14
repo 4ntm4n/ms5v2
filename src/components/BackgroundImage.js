@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const images = [
     "/img/homepage/img1.webp",
@@ -9,8 +9,12 @@ const images = [
 ];
 
 function BackgroundImage({ children }) {
+    const [bgImage, setBgImage] = useState(
+        images[Math.floor(Math.random() * 5)]
+    );
+
   return (
-    <div className="hero min-h-screen" style={{ backgroundImage: `url(${images[0]})` }}>
+    <div className="hero min-h-screen" style={{ backgroundImage: `url(${bgImage})` }}>
         {children}
     </div>   
   );
