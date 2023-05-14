@@ -27,7 +27,7 @@ function BackgroundImage({ children }) {
       setTimeout(() => {
         setBgImage((prevImg) => {
           const idx = images.indexOf(prevImg);
-          const nextIdx = (idx + 1) % 5;
+          const nextIdx = (idx + 1) % images.length;
           return images[nextIdx];
         });
         setIsFadingOut(false);
