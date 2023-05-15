@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function LoginPage() {
   const { user, setUser, setTokens, extractUser } = useAuth();
@@ -27,8 +28,6 @@ function LoginPage() {
         setTokens(data);
         setUser(extractUser(data));
       }
-
-      
     } catch (error) {
       if (error.response) {
         if (error.response.status === 401) {
@@ -48,24 +47,23 @@ function LoginPage() {
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-left">
-          <h1 className="text-5xl font-bold">Login now!</h1>
+        <div className="text-center lg:text-center">
+          <h1 className="text-5xl font-bold">We need some verification.</h1>
           <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
+            log in with you username and passoword and complete some tasks!
           </p>
+          
         </div>
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <form onSubmit={login} className="card-body">
-          {errors &&
-                errors.non_field_errors?.map((error, index) => (
-                  <div key={index} className="alert alert-warning shadow-lg">
-                    <div>
-                      <span className="bg-transparent">{error}.</span>
-                    </div>
+            {errors &&
+              errors.non_field_errors?.map((error, index) => (
+                <div key={index} className="alert alert-warning shadow-lg">
+                  <div>
+                    <span className="bg-transparent">{error}.</span>
                   </div>
-                ))}
+                </div>
+              ))}
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Username</span>
@@ -85,8 +83,6 @@ function LoginPage() {
                     </div>
                   </div>
                 ))}
-              
-              
             </div>
             <div className="form-control">
               <label className="label">
@@ -99,7 +95,7 @@ function LoginPage() {
                 autoComplete="current-password"
                 className="input input-bordered"
               />
-              
+
               {errors &&
                 errors.password?.map((error, index) => (
                   <div key={index} className="alert alert-warning shadow-lg">
@@ -108,10 +104,11 @@ function LoginPage() {
                     </div>
                   </div>
                 ))}
+
               <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
+                <Link to="/signup" className="label-text-alt link link-hover">
+                 no account yet?
+                </Link>
               </label>
             </div>
             <div className="form-control mt-6">
