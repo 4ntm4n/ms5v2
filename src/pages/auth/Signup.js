@@ -27,7 +27,7 @@ function Signup() {
   return (
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content flex-col lg:flex-row-reverse">
-        <div className="text-center lg:text-center max-w-xl">
+        <div className="text-center lg:text-justify max-w-xl">
           <h1 className="text-5xl font-bold ">Welcome to GroupTask!</h1>
           <p className="py-6">
             In culmination of my advanced front-end development course, I
@@ -35,13 +35,15 @@ function Signup() {
             enhance productivity. Users can establish groups, bring members on
             board, and create tasks.
           
-            Unlike traditional task delegation, GroupTask empowers group members
+            <p/>
+
+            <p>Unlike traditional task delegation, GroupTask empowers group members
             to take ownership of tasks which start off as open to anyone within
-            the group.
-          
+            the group.</p>
+
             As tasks are completed, they can be removed or reopened for further
             refinement. This project represents my first steps into building
-            practical and effective software solutions. Log in now to explore my
+            practical and effective software solutions. Sign up and log in now to explore my
             approach to effective task management in a group setting.
           </p>
         </div>

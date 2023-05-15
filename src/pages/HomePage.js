@@ -10,7 +10,7 @@ function HomePage() {
       <div className="hero-overlay bg-opacity-60"></div>
       <div className="hero-content text-center text-neutral-content">
        <div className="flex flex-col ">
-       <div className="text-5xl font-bold flex justify-center gap-5 mb-11">
+       <div className="text-5xl font-bold flex justify-center gap-5 mb-11 bg-base-300 p-4 opacity-90 rounded-lg">
           <FontAwesomeIcon icon={faUsers} />
           <FontAwesomeIcon icon={faListCheck} />
         </div>
