@@ -3,6 +3,7 @@ import api from "../../api/AxiosInterceptors";
 import GroupCard from "../../components/GroupCard";
 import AddGroupModal from "../../components/AddGroupModal";
 import { useAuth } from "../../contexts/AuthContext";
+import NoGroups from "../errorPages/NoGroups";
 
 function ListGroupsPage() {
   const { user } = useAuth();
@@ -46,7 +47,7 @@ function ListGroupsPage() {
             </ul>
           </div>
         ) : (
-          <p>no groups yet...</p>
+          <NoGroups />
         )}
       </div>
     </>
