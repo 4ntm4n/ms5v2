@@ -11,5 +11,3 @@ function Completed() {
 
 export default Completed;
 
-
-/* `/tasks/?owning_group__id=${id}&completed=true` */
