@@ -35,11 +35,6 @@ export const unAuthRequest = axios.create({
   baseURL
 });
 
-export const manualRefresh = axios.create({
-  baseURL,
-  headers: { Authorization: `Bearer ${getTokens()?.access}` },
-});
-
 /*
  *
  * if multiple requests at the same time, the first request to rech here

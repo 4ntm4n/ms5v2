@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { unAuthRequest } from "../../api/AxiosInterceptors";
 
 function LoginPage() {
   const { user, setUser, setTokens, extractUser } = useAuth();
@@ -13,7 +13,7 @@ function LoginPage() {
     try {
       setErrors({});
       // fetch a token using the username and password of an existing user
-      const response = await axios.post("http://localhost:8000/api/token/", {
+      const response = await unAuthRequest.post("/api/token/", {
         username: e.target.username.value,
         password: e.target.password.value,
       });
