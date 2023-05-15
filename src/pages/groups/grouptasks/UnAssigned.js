@@ -5,11 +5,10 @@ function UnAssigned() {
   const { id } = useParams();
 
   return (
-    <GeneralTaskView taskFilter={`/tasks/?owning_group__id=${id}&in_progress=false&completed=false`} />
+    <GeneralTaskView
+      taskFilter={`/tasks/?owning_group__id=${id}&in_progress=false&completed=false`}
+    />
   );
 }
 
-
 export default UnAssigned;
-
-

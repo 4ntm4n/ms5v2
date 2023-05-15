@@ -41,13 +41,13 @@ function GeneralTaskView({taskFilter}) {
     <div className="pb-[180px]">
       <div className="grid grid-cols-1 ">
         <div className="container mx-auto max-w-xl ">
-          {tasks.length ? (
+        {tasks.length ? (
             tasks.map((task) => (
               <Task key={task.id} taskInfo={task} updateTasks={updateTasks} />
             ))
           ) : (
             <p className="text-center">
-              there are currently no uninitiated tasks for this group.
+              there are currently no tasks for this view.
             </p>
           )}
           {nextTasks.map((task) => (
