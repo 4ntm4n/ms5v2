@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import api from "../../../api/AxiosInterceptors";
 import Task from "../../../components/Task";
 import AddTaskModal from "../../../components/AddTaskModal";
-import GeneralTaskView from "./GeneralTaskView";
+import GeneralTaskView from "../../../components/GeneralTaskView";
 
 function InProgress() {
   const { id } = useParams();

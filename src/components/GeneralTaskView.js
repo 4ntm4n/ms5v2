@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import api from "../../../api/AxiosInterceptors";
-import Task from "../../../components/Task";
-import AddTaskModal from "../../../components/AddTaskModal";
+import api from "../api/AxiosInterceptors";
+import Task from "./Task";
+import AddTaskModal from "./AddTaskModal";
 
 function GeneralTaskView({taskFilter}) {
   const { id } = useParams();

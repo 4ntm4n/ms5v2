@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import GeneralTaskView from "./GeneralTaskView";
+import GeneralTaskView from "../../../components/GeneralTaskView";
 
 function Completed() {
   const { id } = useParams();
