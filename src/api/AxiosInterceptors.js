@@ -16,7 +16,7 @@ axios.defaults.withCredentials = true;
  * endpoint on the server, the rest of the requests will be stored in a promise
  * and updated once a new refresh token is obtained.*/
 
-const baseURL = "http://localhost:8000";
+const baseURL = "https://iamrestful.herokuapp.com";
 
 let isRefreshing = false;
 let refreshSubscribers = [];
