@@ -4,32 +4,35 @@ import api from "../api/AxiosInterceptors";
 import Task from "./Task";
 import AddTaskModal from "./AddTaskModal";
 
-function GeneralTaskView({taskFilter}) {
+function GeneralTaskView({ taskFilter }) {
   const { id } = useParams();
   const [tasks, setTasks] = useState([]);
-  const [nextTasks, setNextTasks] = useState([]);
   const [nextUrl, setNextUrl] = useState(null);
   const [tasksChanged, setTasksChanged] = useState(false);
+
   const updateTasks = () => {
     setTasksChanged((prevTasksChanged) => !prevTasksChanged);
   };
 
-  const fetchTasks = async (
-    url = `${taskFilter}`
-  ) => {
+  const fetchTasks = async (url = `${taskFilter}`) => {
     try {
       const { data } = await api.get(url);
-      setNextTasks(data.results);
+      setTasks(data.results);
       setNextUrl(data.next);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const loadMoreTasks = () => {
+  const loadMoreTasks = async () => {
     if (nextUrl) {
-      setTasks([...tasks, ...nextTasks]);
-      fetchTasks(nextUrl);
+      try {
+        const { data } = await api.get(nextUrl);
+        setTasks((prevTasks) => [...prevTasks, ...data.results]);
+        setNextUrl(data.next);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -41,7 +44,7 @@ function GeneralTaskView({taskFilter}) {
     <div className="pb-[180px]">
       <div className="grid grid-cols-1 ">
         <div className="container mx-auto max-w-xl ">
-        {tasks.length ? (
+          {tasks.length ? (
             tasks.map((task) => (
               <Task key={task.id} taskInfo={task} updateTasks={updateTasks} />
             ))
@@ -50,9 +53,6 @@ function GeneralTaskView({taskFilter}) {
               there are currently no tasks for this view.
             </p>
           )}
-          {nextTasks.map((task) => (
-            <Task key={task.id} taskInfo={task} updateTasks={updateTasks} />
-          ))}
         </div>
         {nextUrl && (
           <button
@@ -70,4 +70,3 @@ function GeneralTaskView({taskFilter}) {
 }
 
 export default GeneralTaskView;
-
