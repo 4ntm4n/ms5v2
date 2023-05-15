@@ -55,27 +55,3 @@ function ListGroupsPage() {
 }
 
 export default ListGroupsPage;
-
-/* 
-    group object looks like :
-created_at
-: 
-"02 Mar 2023"
-description
-: 
-"sdfsdf"
-group_owner
-: 
-{id: 1, owner: 'admin', created_at: '23 Feb 2023', updated_at: '2023-02-24', image: 'https://res.cloudinary.com/dgnutwnef/image/upload/v1/media/images/jimtape_qpmi6i', …}
-id
-: 
-8
-members
-: 
-(2) [{…}, {…}]
-name
-: 
-"sfsdf"
-updated_at
-: 
-"02 Mar 2023" */

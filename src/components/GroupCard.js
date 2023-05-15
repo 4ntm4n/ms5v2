@@ -55,7 +55,7 @@ function GroupCard({ group, refreshGroupsList }) {
           </div>
 
           <Link to={`${id}`}>
-            <button className="btn btn-primary">go to group: {id}</button>
+            <button className="btn btn-primary">go to group</button>
           </Link>
         </div>
       </div>
