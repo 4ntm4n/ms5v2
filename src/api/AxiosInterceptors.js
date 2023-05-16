@@ -8,7 +8,7 @@ axios.defaults.withCredentials = true;
  *
  * purpose of this interceptors file is to build one axios instance
  * that has both an request AND a response interceptor that works together in
- * a single request, on every requiest, appose to having two separate instances
+ * a single request, on every request, appose to having two separate instances
  * as shown in the walkthrough project at code institute.
  * If multiple requests are made at the same time, this apprach solves the issue
  * of the server being bombarded with requests to the refresh token endpoint,
