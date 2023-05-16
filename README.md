@@ -1,4 +1,4 @@
-# FlexGrid Yoga
+# GroupTask
 
 ![GroupTask on different screen sizes and devices](readme/img/responsive.png)
 
