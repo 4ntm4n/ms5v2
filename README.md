@@ -9,6 +9,8 @@
 > GroupTask is my take on a collaborative taskmanagement application that lets users create groups and add other users of the app to those groups where they can add update complete and delete tasks together. Users can see who is currently working on a task under and "acvive tasks tab" within a group. A user can also view All her active tasks regardless of what group they belong to under the "tasks page" 
 > 
 > There are no hirarchies or roles in this app, user are instead encourraged to take ownership of uninitiated tasks that are collectively added to the group, rather than being deligated a task from a group leader.
+>
+> In this first itteration of the application, by design everyone who signs up to the app is available as user to add as a member to a group. So this version of the app would not be suitable to be an app open to the whole internet, but could work great if it was depoyed internally within a companys intranet, where all members of a company could have an account and add eachother to different groups to complete tasks together.
 
 [**Have a look on your own device**](https://grouptask.herokuapp.com/)
 
@@ -38,9 +40,16 @@
 
 ## Approach
 
+- This application is created using **CRA framework** (create react app).
+- Navigation is done with the **Router-dom-v6** NPM package
+- Authentication is built with a **useContext hook paired with Axios intercepors**
+- layout and styling is aided by **TailwindCSS**
+- components are initally created with **DaisyUI**
+- Frond and backend is depoyed to **Heroku**
+
 
 ### Design Approach
-> I began this project with a simple approach. I drew up some rough sketches of wireframes on paper to get an idea of how I wanted the project to look. Then, I needed to decide on the technologies that would help me translate these drawings into a functional website. I decided to use Tailwind for managing the CSS styles and a component library called DaisyUI that works with Tailwind. DaisyUI was a good fit because it provided ready-to-use components that I could easily customize by adding Tailwind classes. This made it straightforward to turn my initial sketches into working code.
+> I began this project with a simplest possible design approach. I drew up some rough sketches of wireframes on paper to get an idea of how I wanted the project to look. Then, I needed to decide on the technologies that would help me translate these drawings into a functional website. I decided to use Tailwind for managing the CSS styles and a component library called DaisyUI that works with Tailwind. DaisyUI was a good fit because it provided ready-to-use components that I could easily customize by adding Tailwind classes. This made it straightforward to turn my initial sketches into working code.
 
 ### colors and element design,
 > In terms of colors and element design, I decided to use the basic color theme for the initial version of the app (MVP). DaisyUI provides options for customizing the theme, but I found the default theme to be visually appealing. Additionally, the theme automatically adjusts based on the user's browser settings. If the user's browser has dark mode enabled, the app adopts a basic dark mode theme, while it uses the default light mode theme for other browser settings.
@@ -105,13 +114,18 @@ I have set up a few patterns that i tried to follow during the buildout of this 
 >>
 >> **only then is the promise fulfilled** and the interceptor will return the "retryOriginalRequest" which will indeed retry the original request with the new access token provided by the first request. 
 
+- **useRef hook instead of useState and change handling for forms:**
+> a big part of building a front end part of a full stack application is handling forms that a user fills out to communicate with the serverside logic. In this app I am generally not interested in tracking user input. So instead of using a state that stores the value of the user input I am instead utalizing reacts "useRef hook" to store the value of an input field and then send that input onSubmit(when the form is submitted). Since there are forms for loging in, signing up, creating and updating both tasks and groups This made a positive improvment to the app. 
+>
+> A part where I wanted to track change was in the "AddGroupMembers" component however. Here I wanted to track the users input to send a request to the server everytime the input changed, and I used the more old-school version of handling input fields where a change event sets a state of the input fields on change and that input fields input is then used to set a search query field in the request that is sent to the server everytime the user enters a letter into the search field.
+
 
 ## Testing
 
 
 ## **Testing User stories**
 
-In this section, we are testing the user stories stated in the outline before this website was created, to check if we have met all user needs. We are testing the user stories one by one. 
+In this section, we are testing the user stories stated in the outline before this website was created, to check if we have met all user needs. 
 
 - **Typical users wants to:**
 
@@ -173,127 +187,108 @@ In this section, we are testing the user stories stated in the outline before th
     > an option to delete the the group permanently appears.
     > the group and all related tasks to it will be deleted from the server.
 
+- **extra**
+
+  - **Have the ability to add and remove members to the group**
+  
+    ![Form Feedback](readme/img/extrafeatures/form-feedback.png)
+    > all forms through out the app displays error messages produced by the server side validation, including task add and update form, login and signup form and group forms
+
+  - **Have the ability delete group the user owns**
+    ![Landing Page Background Image](readme/img/extrafeatures/responsive.png)
+    > landing page toggles through images that easily can be added to the backgroundImage component.
+
+
+## Bugs
+all the bugs listed here are still in the app due to lack of time to fix them. I have a clear idea of how, it is just a matter of lack of time.
+> - **Group card**
+>> ![Group Card Bug](readme/img/bugs/card-size.png)
+>>  issue: group cards height vary depending on if group owner is current user and depending on lenghth of group description
+>>
+>> solution: add fixed height that is slighly larger than group card with optionsbutton visible, add scrollable descriptions section 
+>
+>> - **Multiple groups with same name**
+>>  issue: a user can create multiple groups with the same name which is confusing. (this is either a feature or a bug)
+>>
+>> solution: add backend logic that raise error 403 if user tries to create a group with the same name by adding a "unique togehter field" between group name and user id in the group model. front end logic that handles form feedback will show the message with current setup. (this is also already implemented for tasks but where overseen for groups.)
+>
+> - **GroupTask logo**
+>>  issue: there are currently no custom logotype for this app, and when clicking on it nothing happens.
+>>
+>> solution: add custom created logotype, then refactor logo into "Link" element that takes user to homepage if user is false, or to groups page if user is true
+
+## Future improvements
+I have yet to experience any bugs in the core functionality after manually testing the app. 
+Hover, this app is an MVP in many ways and features should be added to both improve the functionality of the app and also improve the user experience in many ways that could and should be added to a future itteration of this app.
+ 
+> - **Adding user feedback**
+> > a toast or an alert should be added to notify a user when new groups and tasks are being removed and added. when members of a group is being removed and added etc.
+>
+> - **Adding user CRUD functionality**
+> > a user should ideally be able to update user info, such as password update and reset, and should be able to delete his user account.
+> 
+> > - **Adding more modals**
+> > a user should get ideally get a confirmation question displayed in a modal before destroying a group. 
+>
+> - **Enhancing signup and login functionality**
+> > the backend is partly prepaired to handle single click signup and login with 3rd party authentication services through dj-rest-auth views, but has not been a priority for making this app work in the short timespan I have had to create this appliciation.
+>
+> - **Event view**
+> > the backend is set up to handle an additional view called "events" which is a view that would show recent activities in groups that the user is a member of. To add this feature a new eventpage should be added to the nav menu and a new type of task card that has a different design and show task data in a different way should be added to the components and rendered out for each task displayed on the the EventPage.
+>
+> - **limit users to a specific company or context on signup**
+> > this is not really a front end only issue, but an important improvement that needs to be adressed for this app to run publically on the web is to add some sort of invitaiton system on signup so that not all users are exposed to every person in the app. Alternatively, all users could be accessable by everyone else, but an invite system would have to be added to let users accept or decline invites to a group.
+>
+> - **ability to hide groups that are not relevant to a user**
+> > again, this is more of a backend limitation than a front end, but ther are currently no way of leave or hide a group that you have been added to. functionaloty to be able to leave a group without the group owner doing it for you would arguably be a good idea. Alternatively an extra key could be added to the group object that sets group visibility to true or false so that users could hide groups they do not want to be visible throughout the app. This might acutally be possible to add in the current state of the app with a patch request to the groups model.
+
 
 ## Deployment
 
-- The site was deployed to GitHub pages. The steps to deploy are as follows:
-  - In the GitHub repository, navigate to the Settings tab
-  - From the source section drop-down menu, select the Master Branch
-  - Once the master branch has been selected, the page will be automatically refreshed with a detailed ribbon display to indicate the successful deployment.
-
-> You can visit the live website form any device by following this link:
->
-> https://4ntm4n.github.io/ms-one/index.html
+- The site front end part of this app was deployed on heroku. The steps to deploy are as follows:
+  - change the baseURL inside src/api/AxiosInterceptors.js in the react app
+  - add, commit and push latest version of react app to github
+  - Log in to heroku and create new app, select region (in my case EU)
+  - From the app overview navigate to settings and add buildpack, select heroku/nodejs
+  - Navigate deploy and connect to your github account
+  - search for the repository containing the react application
+  - enable automatic deploy or click deploy branch
+  
 
 ## Credits
 
-In this section I want to give credits to resources I have used when creating this website.
+> **React router dom v6**
+> https://www.youtube.com/watch?v=Ul3y1LXxzdU&t=1392s
+> *web dev simplified showing an overview of react router dom v6*
 
-### **Technical**
+> **Token based authentication with django and Axios interceptors**
+> https://www.youtube.com/watch?v=xjMP0hspNLE&t=5616s
+> https://www.youtube.com/watch?v=16-1mTdGBoM
+> *Dany Ivy teaching me the basics of axios interceptors and refresh tokens that I ended up taking some ideas from*
 
-> Here I want to give credit to the resources I have used that gave me enough knowledge in html and css in order to build this website.
+> **axios interceptors, request and response interceptor working togehter**
+> https://www.youtube.com/watch?v=nI8PYZNFtac
+> *Dave gray showing an example of how to integreate both request and response interceptors to work together*
+>
 
-> #### **Code Institute**
->
-> Since I am a full stack developer student at code institute most of my fundamental programming skills and essential knowledge in html and css comes from here:
->
-> > https://codeinstitute.net
+**react 18 best hooks and best practices
+>**https://courses.webdevsimplified.com/**
+> *for example learned to use 'useRef' hook to handle form data instead of handle change on every form field, which speeds up the app, makes code more readable and simplifies implementation greatly.*
 
-> #### **Codecademy** - _Intermediate CSS track_
->
-> On Codecademy.com I took a course in intermediate CSS after finishing the course material on Code Institute. Here I learned about flexbox in CSS and also CSS inbuilt grid functionality that I used to create rows for each section of this website.
->
-> > Here is a link to the track on codecademy:
-> > https://www.codecademy.com/learn/learn-intermediate-css
->
-> > here is a link to project I made to teach myself flexbox:
-> > https://github.com/4ntm4n/Tea-cozy/blob/main/README.md
 
-> #### **tips and tricks**
->
-> Here I will are some things I picked up after googling and reading forums
->
-> **smooth-scrolling in CSS:**
->
-> > https://gomakethings.com/smooth-scrolling-links-with-only-css/
->
-> **center an image from html through CSS:**
->
-> > https://www.w3schools.com/howto/howto_css_image_center.asp
->
-> **adding script to bottom of the page:**
->
-> > https://stackoverflow.com/questions/38407962/when-to-use-the-script-tag-in-the-head-and-body-section-of-a-html-page#:~:text=Put%20your%20functions%20in%20the,not%20interfere%20with%20page%20content.&text=If%20your%20is%20not%20placed,of%20the%20element.
->
-> **styling input fields:**
->
-> > https://www.w3schools.com/css/css_form.asp
->
-> **hamburger menu:**
->
-> found this burger menu method, imported it and modified it to suit this website.
->
-> > https://codepen.io/alvarotrigo/pen/wvrzPWL
->
-> **using media queries:**
->
-> > https://developer.mozilla.org/en-US/docs/Web/CSS/Media_Queries/Using_media_queries
->
-> **how to ease everything on hover:** > https://stackoverflow.com/questions/41267357/css-ease-in-and-out-on-hover
+**Tailwind CSS**
+> https://tailwindcss.com/
+> *ailwind was used as a base for handling css classes in my application*
 
-### **Content**
+**DaisyUI**
+> https://daisyui.com/
+> *DaisyUI is a set of pre-made components build with tailwind*
+> *Using DaisyUI in my application allowed me to implement basic components quickly, and then tweak and modify them by adding my own style with tailding. Tailwind natively extends DaisyUI which has been very helpful in creating this app in a short timeframe*
 
-In terms of text content, almost everything has been invented by myself on the fly as I saw fit and can be viewed as relevant mockup text that should be replaced by the site owners own words if this site ever were to be commercially used.
-
-> #### **Benefits of yoga**
->
-> The cards in the benefits section have six different benefits of yoga presented on them, these benefits were inspired by this article.
->
-> > https://www.hopkinsmedicine.org/health/wellness-and-prevention/9-benefits-of-yoga
-
-### **Fonts and icons**
-
-> - Fonts for text and heading has been imported through [Google Fonts](https://fonts.google.com/)
->   >
-> - The icons in the footer were taken from [Font Awesome](https://fontawesome.com/)
-
-### **Media**
-
-In this section you can see where the media elements on the website comes from and who created them.
-
-> **flower pictures that are used for the benefits cards:** >https://www.freepik.com/free-vector/yoga-mind-quote-vector-template-social-media-post-set_20266489.htm#query=flower%20yoga%20pose&position=0&from_view=search
->
-> > created by rawpixel.com and availabel on https://freepik.com/
-
-> **background of sign-up section on members page:** >https://www.freepik.com/free-vector/people-practicing-yoga_9176176.htm#query=yoga%20studio&position=33&from_view=keyword
->
-> > Created by pch.vector and available on https://freepik.com/
-
-> **background of join section on index page** >https://www.freepik.com/free-vector/open-air-yoga-class-concept_9892525.htm#query=yoga&position=2&from_view=author
->
-> > created by pikisuperstar and available on https://freepik.com/
-
-> **Selfie image in the about section on index page** > https://www.freepik.com/free-photo/woman-yoga-mat-relax-park-young-sporty-asian-woman-practicing-yoga-doing-headstand-exercise-working-out-wearing-sportswear-pants-top_14625823.htm#query=yoga%20nature%20headstand&position=0&from_view=search
->
-> > Image by jcomp and available on https://freepik.com/
-
-> **background image in header on index and members page**
->
-> > bought from Adobe stock photos and available on https://adobestock.com/
-
-> **video element in sign-up section on members page**
->
-> As mentioned in the testing area: _This video is for mockup reasons only_ to display what an embedded video would look like on this page and should be replaced by the site owners own video uploaded to youtube. All credit goes to the creator and creators account.
->
-> By viewing the video on this website, you are watching the creators channel on youtube through the iframe and youtube's embedded code.
->
-> > _Name of account:_
-> >
-> > **Boho Beautiful Yoga**
->
-> > _Link to video used:_
-> >
-> > https://www.youtube.com/watch?v=CiaD3jP0YhA
+> **general learning resources ive used in this project**
+> codecademy.com
+> freecodecamp.org
+> codeInstitute.net
 
 ---
 
@@ -301,16 +296,15 @@ In this section you can see where the media elements on the website comes from a
 
 Thank you for taking the time to read through this website documentation.
 
-This project is the first of five milestone projects in a full stack developer course that I have enrolled through [Code Institute](https://codeinstitute.net).
+This project is the front end part of the fifth and final milestone projects in a full stack developer course that I have enrolled through [Code Institute](https://codeinstitute.net).
 
-- There are many ways to approach a project like this, but in this case I wanted to:
+I have learned a lot through out this course. and I am relatively happy with the outcome of what I have learned so far.
+Going forward I will try to stick to more controlled frameworks in react. One of those that are now also recommended by the react dev comunity since CRA is deprecated, such as NextJS or Remix that will help me to enhance development speed and solidify some best practices in developing full stack applications. Working with Create-react-app that does not come with any true stardardisations when building out an application has truly been a challange I am not sure I want to persue anytime soon..
 
-  - **A**: limit myself to **pure** html and CSS since this is a course in those topics and I was curious to see how much could be done without using any javascript to create front end functionality.
-
-  - **B**: **not use** any framework to aid me in class creation, grid functionality and design.
-
-  - **C**: Work from a **pre-defined** project suggestion (in this case yoga / mindfulness) to further challenge myself and create a, what I can imagine, more life like scenario for a web developer where you put yourself in a clients shoes and work with a topic that is not always aligning with personal interests.
-
-> FlexGrid Yoga - a study in HTML & CSS
+> GroupTask - a study in Advanced front end
 >
-> By Anton Askling 2022
+> By Anton Askling 2023
+
+//add crud explaination
+//add wireframes
+// add link to version 1 of app that did not work explain why
