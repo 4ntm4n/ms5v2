@@ -13,6 +13,8 @@
 > In this first itteration of the application, by design everyone who signs up to the app is available as user to add as a member to a group. So this version of the app would not be suitable to be an app open to the whole internet, but could work great if it was depoyed internally within a companys intranet, where all members of a company could have an account and add eachother to different groups to complete tasks together.
 
 [**Have a look on your own device**](https://grouptask.herokuapp.com/)
+> PLEASE NOTE: the initial loading of the app might be extra slow since heroku's free hosting hybernates after inactivity. So if no one has used the app for a while (highly likely), the server has to spin up before it even attempts to load the app.
+
 
 ### **user stories:**
 
@@ -59,8 +61,47 @@
 
 ### Wireframes
 
-These wireframes are created using Adobe Illustrator.
-![FlexGrid Yoga wireframes](assets/img/readme/wireframe.png)
+
+**Groups Page and Group Detail Page**
+![Groups list detail page](readme/img/wireframes/groups.jpg)
+
+> This is the rough initial idea for the groups list- and detail page.
+>
+> The groups page is responsible for listing all groups that the user is a member of. One group-card component for each group. as well as the ability to add a new group. 
+>
+> the group detail page is responsible for showing group information in a sidepanel, such as group members and information about the group. and has a main area wher the tasks for the group is shown. 
+> some filter buttons on the top let the user switch between un-initiaded tasks, active tasks and completed tasks.
+
+---
+
+**Event Page and Task Page**
+![Event and task page](readme/img/wireframes/tasks-events.jpg)
+
+> here is the ideas I had for the task page and "event page". The event page has not made it into this itteration of the front end part of the project, but you can read more about the idea behind it in the backend part of this project. 
+> 
+>You can also see that the tasks page has an idea for a sidepanel that did not make it into this itteration. The idea with the sidepanel is to give the user access to some predefined filters on his own tasks, and a search button to search for individual tasks. 
+>
+> The events page should show an event card that takes in information both from recent groups created and recent tasks created, to inform a user of recent activities with groups that the user has been added to or where tasks has been midified. For example " user **X** completed task **Y** in group **Z**". 
+>
+> The task page is showing all tasks that a user owns, regardless of what group they belong to, so a user quickly can start clearing some tasks they own.
+
+---
+
+
+**Group- Task- and members search Members cards**
+![Components](readme/img/wireframes/components.jpg)
+
+> Here are the ideas I had for the
+> - **Group Card**  that shows information about a group
+> - **Task Card** that shows information related to a task
+> - **members search and members card** lets users search for a member and shows a card for each result
+>
+> **The Group card** features an image of the owner of the group, an options button if the owner of the group is the current user, a title and description of the group, an avatar list that shows how many members there are to the group and a button that links to that group's detail page.
+>
+> **The Task Card** features an avatar that shows who is the owner of the task, a task title, and a button with actions that are possible to take on the task depending of if it is unitiated, in progress completed, or already owned by someone else. It also features a dropdown to show the description of the task if the title is clicked.
+>
+> **The search members component** updates on change to show members that includes the search query in the search box. for each result a member card is shown. If the owner is already in the group a minus button appears, that lets user remove the user from the members of the group. If the user is not a member a plus icon indicates that a user can be added to the group.
+
 
 ---
 
@@ -89,6 +130,10 @@ I have set up a few patterns that i tried to follow during the buildout of this 
 
 
 - ### **Creating my own axios interceptors method that scales**
+
+> ![custom axios interceptor flowchart](readme/img/axios-interceptors.png)
+> Refeer to this flowchart when reading the explanation below.
+
 > The backend of this project is set up so that an access token expires every 5 minutes, and for this application I have created an axios instance that handles updating that refresh token automatically, AND it also makes sure that the refresh endpoint is only called ONCE no matter how many requests are failing across the app when the access token becomes invalid.
 >
 > this has by far been the most complicated aspect of this project. The problem I faced was that all the requests that was failing created multiple requests inside the axios interceptor to the refresh token endpoint. the more tasks that were created by users, the more requests where being made to the refresh endpoint if a token had expired. This made the app extremely slow, and even crashed as more and more data was being added by users in the app.
@@ -161,6 +206,7 @@ In this section, we are testing the user stories stated in the outline before th
     ![All My Tasks](readme/img/userstories/all-my-tasks.jpg)
     > by navigating to the tasks page a user can see all tasks that he / she owns
     > regardless of what group the task belongs to.
+
 - **Existing users want to:**
 
   - **Update profile image so that other users can identify her in the app**
@@ -171,14 +217,14 @@ In this section, we are testing the user stories stated in the outline before th
 - **Site owner wants to:**
 
   - **Have the ability to add and remove members to the group**
-  
+  - 
     ![Edit Members](readme/img/userstories/edit-members.png)
     > a group owner can easily add and remove group members from the same view
     > if the member is already in the group, a minus symbol indicates that the member
     > will  be removed if the card is clicked. If the user is not yet a member, the user will
     > be added if the card is clicked indicated with a plus sign. 
-    > additionally a group owner can search for a member to narrow down the list of users on the app
-    > to more eaisly find the user the group owner is looking for.
+    >> additionally a group owner can search for a member to narrow down the list of users on the app to more eaisly find the user the group owner is looking for.
+    > the searchbox tracks changes to the input and fires off a request everytime the search query changes.
 
   - **Have the ability delete group the user owns**
     ![Delete Group](readme/img/userstories/delete-group-vertical-dots.png)
@@ -189,7 +235,7 @@ In this section, we are testing the user stories stated in the outline before th
 
 - **extra**
 
-  - **Have the ability to add and remove members to the group**
+  - **Form Validation**
   
     ![Form Feedback](readme/img/extrafeatures/form-feedback.png)
     > all forms through out the app displays error messages produced by the server side validation, including task add and update form, login and signup form and group forms
@@ -308,3 +354,5 @@ Going forward I will try to stick to more controlled frameworks in react. One of
 //add crud explaination
 //add wireframes
 // add link to version 1 of app that did not work explain why
+// add loading symol if groups page are loading
+// remove ability to visit homepage if logged in redirect to groups page.

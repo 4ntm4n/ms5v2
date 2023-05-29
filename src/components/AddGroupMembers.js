@@ -14,7 +14,6 @@ function AddGroupMembers({ groupId, members, groupOwner , updateMembers}) {
     updateMembers();
   };
 
-
   const fetchProfiles = async (query) => {
     try {
       const { data } = await api.get(`/profiles/?search=${query}`);

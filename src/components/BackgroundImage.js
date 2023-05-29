@@ -52,5 +52,3 @@ function BackgroundImage({ children }) {
 }
 
 export default BackgroundImage;
-
-/*  ${} */

@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import api, { manualRefresh } from "../api/AxiosInterceptors";
 
 function UserOptionsModal() {
   const { user, setUser } = useAuth();

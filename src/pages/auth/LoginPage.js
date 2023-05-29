@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { unAuthRequest } from "../../api/AxiosInterceptors";
 
 function LoginPage() {
-  const { user, setUser, setTokens, extractUser } = useAuth();
+  const { setUser, setTokens, extractUser } = useAuth();
   const [errors, setErrors] = useState({});
 
   const login = async (e) => {

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import TaskOptions from "./TaskOptions";
-import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from "../contexts/AuthContext";
 
 function Task({ taskInfo, updateTasks }) {
