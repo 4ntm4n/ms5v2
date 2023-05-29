@@ -19,7 +19,6 @@ function Task({ taskInfo, updateTasks }) {
     updated_at,
   } = taskInfo;
 
-  console.log(taskInfo);
 
   const owningUser = user.userId === owner ? true : false;
 

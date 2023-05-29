@@ -50,7 +50,7 @@ function UserOptionsModal() {
     e.preventDefault();
   
     if (!profileImg.img) {
-      console.log("No image selected");
+      //console.log("No image selected");
       return;
     }
   
