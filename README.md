@@ -1,4 +1,5 @@
 # GroupTask
+this is the front end part of the application. [Click Here](https://github.com/4ntm4n/ms-five-api) to read the backend documentation.
 
 ![GroupTask on different screen sizes and devices](readme/img/responsive.png)
 
@@ -364,6 +365,15 @@ This project is the front end part of the fifth and final milestone projects in 
 
 I have learned a lot through out this course. and I am relatively happy with the outcome of what I have learned so far.
 Going forward I will try to stick to more controlled frameworks in react. One of those that are now also recommended by the react dev comunity since CRA is deprecated, such as NextJS or Remix that will help me to enhance development speed and solidify some best practices in developing full stack applications. Working with Create-react-app that does not come with any true stardardisations when building out an application has truly been a challange I am not sure I want to persue anytime soon..
+
+### Additonally
+> this is the 2nd attempt at creating this application. Due to the problems I had with the auth method I had to completely rebuild the auth method in the backend and re-do this front end application. Therefor I have not included the sprints in this app. They were connected to the previous build attempt.
+> the first trainwreck attempt to create this app can be found here:
+> https://github.com/4ntm4n/ms5-front-end/
+> 
+> the userStories and sprints I originally built the app from are connected to that project and can be found here:
+> these are N/A in this version of the app, since the last month has been one long painful sprint to try and get this app sent in.
+> https://github.com/users/4ntm4n/projects/6/views/1
 
 > GroupTask - a study in Advanced front end
 >
