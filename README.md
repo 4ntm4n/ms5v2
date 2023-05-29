@@ -128,11 +128,13 @@ I have set up a few patterns that i tried to follow during the buildout of this 
 - **making post requests from inside nested components :**
 > To separate some functionality from the top level components, patch and post requests are made in the lower level compoents. when a post requst has been completed successfully the top level component is then notified of the change by triggering a callback to the top level component where the get request is made to re-render the updated parts of the page when data on the server is changed.
 
+---
 
-- ### **Creating my own axios interceptors method that scales**
+- #### **Creating my own axios interceptors method that scales**
 
 > ![custom axios interceptor flowchart](readme/img/axios-interceptors.png)
-> Refeer to this flowchart when reading the explanation below.
+>
+>> _Refeer to this flowchart when reading the explanation below._
 
 > The backend of this project is set up so that an access token expires every 5 minutes, and for this application I have created an axios instance that handles updating that refresh token automatically, AND it also makes sure that the refresh endpoint is only called ONCE no matter how many requests are failing across the app when the access token becomes invalid.
 >
@@ -158,15 +160,31 @@ I have set up a few patterns that i tried to follow during the buildout of this 
 >> when the first request is done it will  take the response from api/token/refresh which contains the new access token and provide it to each of every callback that is stored in the refreshSubscribers array. 
 >>
 >> **only then is the promise fulfilled** and the interceptor will return the "retryOriginalRequest" which will indeed retry the original request with the new access token provided by the first request. 
+>
+> ![multiple requests bug](readme/img/bugs/multiple-requests.png)
+> > this is what it looked like in the first attempt of creating this app. every requests that was made after the token was expired, went through the token refresh process, making the app crash and not scale.
+>
+> ![multiple requests bug fixed](readme/img/bugs/multiple-requests-fixed.png)
+> > this is what requests looks like after implementing my custom interceptors. regardless of how many requests were made after a token had expired, only one request is sent to refresh token endpoint. It scales even when lots of new data has been added by users inside the app.
+
+---
 
 - **useRef hook instead of useState and change handling for forms:**
-> a big part of building a front end part of a full stack application is handling forms that a user fills out to communicate with the serverside logic. In this app I am generally not interested in tracking user input. So instead of using a state that stores the value of the user input I am instead utalizing reacts "useRef hook" to store the value of an input field and then send that input onSubmit(when the form is submitted). Since there are forms for loging in, signing up, creating and updating both tasks and groups This made a positive improvment to the app. 
+> a big part of building a front end part of a full stack application is handling forms that a user fills out to communicate with the serverside logic. In this app I am generally not interested in tracking user input. So instead of using a state that stores the value of the user input I am instead utalizing reacts "useRef hook" to store the value of an input field and then send that input onSubmit(when the form is submitted). Since there are forms for loging in, signing up, creating and updating both tasks and groups This made a positive improvment to the app's performance. 
 >
 > A part where I wanted to track change was in the "AddGroupMembers" component however. Here I wanted to track the users input to send a request to the server everytime the input changed, and I used the more old-school version of handling input fields where a change event sets a state of the input fields on change and that input fields input is then used to set a search query field in the request that is sent to the server everytime the user enters a letter into the search field.
 
 
-## Testing
 
+#### CRUD functionality
+
+- A user can **Create**, **Read** **update** and **Delete** a **group** that he/she owns.
+- A user can **Create**, **Read** **update** and **delete** a **task**.
+- A user can also **Take ownership **of, and **complete** a task
+
+---  
+
+## Testing
 
 ## **Testing User stories**
 
@@ -240,7 +258,7 @@ In this section, we are testing the user stories stated in the outline before th
     ![Form Feedback](readme/img/extrafeatures/form-feedback.png)
     > all forms through out the app displays error messages produced by the server side validation, including task add and update form, login and signup form and group forms
 
-  - **Have the ability delete group the user owns**
+  - **custom background image carousel**
     ![Landing Page Background Image](readme/img/extrafeatures/responsive.png)
     > landing page toggles through images that easily can be added to the backgroundImage component.
 
@@ -351,8 +369,4 @@ Going forward I will try to stick to more controlled frameworks in react. One of
 >
 > By Anton Askling 2023
 
-//add crud explaination
-//add wireframes
-// add link to version 1 of app that did not work explain why
-// add loading symol if groups page are loading
-// remove ability to visit homepage if logged in redirect to groups page.
+
